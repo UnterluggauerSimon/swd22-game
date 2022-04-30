@@ -9,6 +9,8 @@ build/
 *.ear
 hs_err_pid*
 .attach_pid*
+*.build.gradle
+
 
 ## Android:
 android/libs/armeabi-v7a/
