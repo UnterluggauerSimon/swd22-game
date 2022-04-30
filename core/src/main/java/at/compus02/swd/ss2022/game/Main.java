@@ -32,6 +32,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		// test
 		batch = new SpriteBatch();
 		gameObjects.add(new Sign());
 		gameObjects.add(new Bush());
