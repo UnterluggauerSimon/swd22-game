@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Log implements  GameObject
 {
+
+    //text
     private Texture image;
     private Sprite sprite;
 
