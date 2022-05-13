@@ -54,7 +54,9 @@ public class Main extends ApplicationAdapter {
 			gameObject.draw(batch);
 		}
 		font.draw(batch, "Hello Game", -220, -220);
+		//Position Bush
 		gameObjects.get(1).setPosition(-200,-200);
+		//Position Log
 		gameObjects.get(2).setPosition(200,200);
 		batch.end();
 	}
