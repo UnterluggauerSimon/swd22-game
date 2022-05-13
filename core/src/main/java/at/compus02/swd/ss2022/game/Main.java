@@ -5,6 +5,7 @@ import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.gameobjects.Log;
 import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
+import at.compus02.swd.ss2022.game.tile_factory.TileFactory;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -39,6 +40,10 @@ public class Main extends ApplicationAdapter {
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		Gdx.input.setInputProcessor(this.gameInput);
+
+		TileFactory tileFactory = new TileFactory();
+
+		//tileFactory.createTiles();
 	}
 
 	private void act(float delta) {
@@ -58,6 +63,7 @@ public class Main extends ApplicationAdapter {
 		gameObjects.get(1).setPosition(-200,-200);
 		//Position Log
 		gameObjects.get(2).setPosition(200,200);
+		//Position Gras
 		batch.end();
 	}
 
