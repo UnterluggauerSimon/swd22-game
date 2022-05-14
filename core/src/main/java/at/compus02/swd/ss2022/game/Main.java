@@ -45,9 +45,12 @@ public class Main extends ApplicationAdapter {
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 255, -192, 160, 192, -160);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -32, 0, 192, -160);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -192, 160, 32, 0);
-		PlayerFactory playerFactory = new PlayerFactory();
-		DecorationFactory decorationFactory = new DecorationFactory();
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, -16,16,0,0);
+
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, 192, 64);
+
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, -16,-16,16,16);
 		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, -60,0,16,0);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
