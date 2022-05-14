@@ -33,21 +33,22 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
+		PlayerFactory playerFactory = new PlayerFactory();
+		DecorationFactory decorationFactory = new DecorationFactory();
+
 		float startX = 0 - viewport.getMaxWorldWidth() / 2;
 		float startY = viewport.getMaxWorldHeight() / 2;
 		float endX = viewport.getMaxWorldWidth() / 2;
 		float endY = 0 - viewport.getMaxWorldHeight() / 2;
 		System.out.println(endY);
+
+		//map
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 60, -100, 100, 100, -100);
-		//Wall Oben
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, 100, 100, 100);
-		//Wall Links
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, -100, 100, -100);
-		//Wall Rechts
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, 100, 100, 100, -100);
-		PlayerFactory playerFactory = new PlayerFactory();
-		DecorationFactory decorationFactory = new DecorationFactory();
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 200, -192, 160, 192, -192);
+
+		//decoration
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 10, -192, 160, 193, -169);
+
 
 		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, 0,0,0,0);
 		batch = new SpriteBatch();
