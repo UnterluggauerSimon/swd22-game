@@ -35,12 +35,11 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
-		gameObjects = tileFactory.createTiles(gameObjects, TileType.Water, 225);
-
+		gameObjects = tileFactory.createTiles(gameObjects, TileType.Water, 255);
 		batch = new SpriteBatch();
-		gameObjects.add(new Sign());
-		gameObjects.add(new Bush());
-		gameObjects.add(new Log());
+		Sign s1 = new Sign();
+		s1.setPosition(0,0);
+		gameObjects.add(s1);
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		Gdx.input.setInputProcessor(this.gameInput);
@@ -60,11 +59,6 @@ public class Main extends ApplicationAdapter {
 			gameObject.draw(batch);
 		}
 		font.draw(batch, "Hello Game", -220, -220);
-		//Position Bush
-		gameObjects.get(1).setPosition(-200,-200);
-		//Position Log
-		gameObjects.get(2).setPosition(200,200);
-		//Position Gras
 		batch.end();
 	}
 
