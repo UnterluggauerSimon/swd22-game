@@ -39,7 +39,6 @@ public class Main extends ApplicationAdapter {
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		Gdx.input.setInputProcessor(this.gameInput);
-
 	}
 
 	private void act(float delta) {
