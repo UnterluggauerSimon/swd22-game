@@ -10,8 +10,8 @@ public class DecorationFactory implements Factory
     @Override
     public Array<GameObject> createGameObjects(Array<GameObject> gameObject, GameObjectType gameObjectType, int amountObjects, float startX, float endX, float startY, float endY)
     {
-        float x = 0;
-        float y = 0;
+        float x = startX;
+        float y = endX;
 
         this.gameObject = getObject(gameObjectType);
         this.gameObject.setPosition(x,y);
