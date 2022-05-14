@@ -41,14 +41,31 @@ public class Main extends ApplicationAdapter {
 		float endX = viewport.getMaxWorldWidth() / 2;
 		float endY = 0 - viewport.getMaxWorldHeight() / 2;
 		System.out.println(startY);
+		//create Backgroudn
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 255, -192, 160, 192, -160);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -32, 0, 192, -160);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -192, 160, 32, 0);
 
+		//create Decoration Top Left
 		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, 192, 64);
 		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, 192, 64);
 		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, 192, 64);
+
+		//create Decoration Top Right
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, 32, 160, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Log, 3, 32, 160, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, 32, 160, 192, 64);
+
+		//create Decoration Bottom Left
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, -32, -160);
+
+		//create Decoration Bottom Right
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, 32, 160, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, 32, 160, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, 32, 160, -32, -160);
 
 		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, -16,-16,16,16);
 		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, -60,0,16,0);
