@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TileGras implements GameObject
+public class Knight implements  GameObject
 {
     private Texture image;
     private Sprite sprite;
 
-    public TileGras()
+    public Knight()
     {
-        image = new Texture("tile_gras.png");
+        image = new Texture("knight.png");
         sprite = new Sprite(image);
     }
 

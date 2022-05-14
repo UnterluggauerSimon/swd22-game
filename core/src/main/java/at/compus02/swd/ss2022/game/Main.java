@@ -1,5 +1,7 @@
 package at.compus02.swd.ss2022.game;
 
+import at.compus02.swd.ss2022.game.factories.DecorationFactory;
+import at.compus02.swd.ss2022.game.factories.PlayerFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
@@ -31,11 +33,13 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
+		PlayerFactory playerFactory = new PlayerFactory();
+		DecorationFactory decorationFactory = new DecorationFactory();
+
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1);
+		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1);
 		batch = new SpriteBatch();
-		Sign s1 = new Sign();
-		s1.setPosition(0,0);
-		gameObjects.add(s1);
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		Gdx.input.setInputProcessor(this.gameInput);

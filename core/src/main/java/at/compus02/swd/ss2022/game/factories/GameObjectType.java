@@ -9,5 +9,6 @@ public enum GameObjectType
     Bush,
     Log,
     Sign,
-    Stone
+    Stone,
+    Knight
 }
