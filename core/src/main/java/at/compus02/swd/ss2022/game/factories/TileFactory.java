@@ -1,17 +1,17 @@
-package at.compus02.swd.ss2022.game.tile_factory;
+package at.compus02.swd.ss2022.game.factories;
 
 
 import at.compus02.swd.ss2022.game.gameobjects.*;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
-
-public class TileFactory
+public class TileFactory implements Factory
 {
-    GameObject gO;
-    public GameObject getTile(TileType tileType)
+    GameObject gameObject;
+
+    @Override
+    public GameObject getObject(GameObjectType gameObjectType)
     {
-        switch(tileType)
+        switch(gameObjectType)
         {
             case Gras:
                 return new TileGras();
@@ -26,16 +26,17 @@ public class TileFactory
         }
     }
 
-    public Array<GameObject> createTiles(Array<GameObject> gameObject, TileType tileType, int amountTiles)
+    @Override
+    public Array<GameObject> createGameObjects(Array<GameObject> gameObject, GameObjectType gameObjectType, int amountTiles)
     {
         float x = -240;
         float y = 210;
         for (int i = 0; i < amountTiles; i++)
         {
             if(x <= 240){
-                gO = getTile(tileType);
-                gO.setPosition(x,y);
-                gameObject.add(gO);
+                this.gameObject = getObject(gameObjectType);
+                this.gameObject.setPosition(x,y);
+                gameObject.add(this.gameObject);
                 x=x+32;
             }else{
                 x=-240;
@@ -45,7 +46,6 @@ public class TileFactory
                 y=y-32;
             }
         }
-
         return gameObject;
     }
 }

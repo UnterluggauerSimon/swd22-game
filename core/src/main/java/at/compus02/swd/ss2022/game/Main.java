@@ -1,19 +1,15 @@
 package at.compus02.swd.ss2022.game;
 
-import at.compus02.swd.ss2022.game.gameobjects.Bush;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
-import at.compus02.swd.ss2022.game.gameobjects.Log;
 import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
-import at.compus02.swd.ss2022.game.tile_factory.TileFactory;
-import at.compus02.swd.ss2022.game.tile_factory.TileType;
+import at.compus02.swd.ss2022.game.factories.TileFactory;
+import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -35,7 +31,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
-		gameObjects = tileFactory.createTiles(gameObjects, TileType.Water, 255);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255);
 		batch = new SpriteBatch();
 		Sign s1 = new Sign();
 		s1.setPosition(0,0);
