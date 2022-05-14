@@ -33,6 +33,9 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		TileFactory tileFactory = new TileFactory();
+		gameObjects = tileFactory.createTiles(gameObjects, "water", 225);
+
 		batch = new SpriteBatch();
 		gameObjects.add(new Sign());
 		gameObjects.add(new Bush());
@@ -41,9 +44,6 @@ public class Main extends ApplicationAdapter {
 		font.setColor(Color.WHITE);
 		Gdx.input.setInputProcessor(this.gameInput);
 
-		TileFactory tileFactory = new TileFactory();
-
-		//tileFactory.createTiles();
 	}
 
 	private void act(float delta) {
