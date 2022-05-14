@@ -26,6 +26,12 @@ public class PlayerFactory implements Factory
         {
             case Knight:
                 return new Knight();
+            case Questmaster:
+                return new Questmaster();
+            case GoodKnight:
+                return new GoodKnight();
+            case BadKnight:
+                return new BadKnight();
             default:
                 return null;
         }

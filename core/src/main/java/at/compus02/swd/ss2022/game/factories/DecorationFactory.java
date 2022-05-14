@@ -30,6 +30,8 @@ public class DecorationFactory implements Factory
                 return new Log();
             case Sign:
                 return new Sign();
+            case Flame:
+                return new Flame();
             default:
                 return null;
         }

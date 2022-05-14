@@ -10,5 +10,9 @@ public enum GameObjectType
     Log,
     Sign,
     Stone,
-    Knight
+    Flame,
+    Knight,
+    GoodKnight,
+    BadKnight,
+    Questmaster
 }
