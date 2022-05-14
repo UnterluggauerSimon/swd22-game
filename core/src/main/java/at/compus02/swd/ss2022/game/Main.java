@@ -40,13 +40,16 @@ public class Main extends ApplicationAdapter {
 		System.out.println(endY);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 60, -100, 100, 100, -100);
+		//Wall Oben
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, 100, 100, 100);
+		//Wall Links
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, -100, 100, -100);
+		//Wall Rechts
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, 100, 100, 100, -100);
 		PlayerFactory playerFactory = new PlayerFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
 
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1);
-		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1);
+		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, 0,0,0,0);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
