@@ -32,6 +32,12 @@ public class DecorationFactory implements Factory
                 return new Sign();
             case Flame:
                 return new Flame();
+            case BigTree:
+                return new BigTree();
+            case LittleTree:
+                return new LittleTree();
+            case Hearth:
+                return new Hearth();
             default:
                 return null;
         }
