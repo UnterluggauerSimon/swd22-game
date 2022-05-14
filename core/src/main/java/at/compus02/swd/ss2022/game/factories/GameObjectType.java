@@ -9,5 +9,10 @@ public enum GameObjectType
     Bush,
     Log,
     Sign,
-    Stone
+    Stone,
+    Flame,
+    Knight,
+    GoodKnight,
+    BadKnight,
+    Questmaster
 }
