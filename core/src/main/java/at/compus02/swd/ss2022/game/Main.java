@@ -6,6 +6,7 @@ import at.compus02.swd.ss2022.game.gameobjects.Log;
 import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.tile_factory.TileFactory;
+import at.compus02.swd.ss2022.game.tile_factory.TileType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -30,11 +31,12 @@ public class Main extends ApplicationAdapter {
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
+	private TileType tileType = TileType.Gras;
 
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
-		gameObjects = tileFactory.createTiles(gameObjects, "water", 225);
+		gameObjects = tileFactory.createTiles(gameObjects, tileType.Water, 225);
 
 		batch = new SpriteBatch();
 		gameObjects.add(new Sign());
