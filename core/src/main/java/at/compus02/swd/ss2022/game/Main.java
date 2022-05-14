@@ -31,12 +31,11 @@ public class Main extends ApplicationAdapter {
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
-	private TileType tileType = TileType.Gras;
 
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
-		gameObjects = tileFactory.createTiles(gameObjects, tileType.Water, 225);
+		gameObjects = tileFactory.createTiles(gameObjects, TileType.Water, 225);
 
 		batch = new SpriteBatch();
 		gameObjects.add(new Sign());
