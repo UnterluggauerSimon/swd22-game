@@ -4,28 +4,26 @@ package at.compus02.swd.ss2022.game.tile_factory;
 import at.compus02.swd.ss2022.game.gameobjects.*;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
-
 public class TileFactory
 {
-    public GameObject getTile(String tileType)
+    public GameObject getTile(TileType tileType)
     {
         switch(tileType)
         {
-            case "gras":
+            case Gras:
                 return new TileGras();
-            case "gravel":
+            case Gravel:
                 return new TileGravel();
-            case "wall":
+            case Wall:
                 return new TileWall();
-            case "water":
+            case Water:
                 return new TileWater();
             default:
                 return null;
         }
     }
 
-    public Array<GameObject> createTiles(Array<GameObject> gameObject, String tileType, int amountTiles)
+    public Array<GameObject> createTiles(Array<GameObject> gameObject, TileType tileType, int amountTiles)
     {
         for (int i = 0; i < amountTiles; i++)
         {
