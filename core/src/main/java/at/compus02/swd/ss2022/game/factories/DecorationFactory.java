@@ -7,7 +7,7 @@ public class DecorationFactory implements Factory
 {
 
     @Override
-    public Array<GameObject> createGameObjects(Array<GameObject> gameObject, GameObjectType gameObjectType, int amountTiles)
+    public Array<GameObject> createGameObjects(Array<GameObject> gameObject, GameObjectType gameObjectType, int amountObjects, float startX, float endX, float startY, float endY)
     {
         return null;
     }
@@ -17,4 +17,5 @@ public class DecorationFactory implements Factory
     {
         return null;
     }
+
 }

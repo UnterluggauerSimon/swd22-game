@@ -31,7 +31,14 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255);
+		float startX = 0 - viewport.getMaxWorldWidth() / 2;
+		float startY = viewport.getMaxWorldHeight() / 2;
+		float endX = viewport.getMaxWorldWidth() / 2;
+		float endY = 0 - viewport.getMaxWorldHeight() / 2;
+		System.out.println(endY);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 60, -100, 100, 100, -100);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, 100, 100, 100);
 		batch = new SpriteBatch();
 		Sign s1 = new Sign();
 		s1.setPosition(0,0);

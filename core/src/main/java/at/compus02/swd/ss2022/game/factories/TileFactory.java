@@ -9,6 +9,27 @@ public class TileFactory implements Factory
     GameObject gameObject;
 
     @Override
+    public Array<GameObject> createGameObjects(Array<GameObject> gameObject, GameObjectType gameObjectType, int amountObjects, float startX, float endX, float startY, float endY)
+    {
+        float x = startX;
+        float y = startY;
+        for (int i = 0; i < amountObjects; i++) {
+            this.gameObject = getObject(gameObjectType);
+            this.gameObject.setPosition(x, y);
+            gameObject.add(this.gameObject);
+            x += 32;
+            if (x > endX) {
+                y -= 32;
+                x = startX;
+            }
+            if (y < endY) {
+                y = startY;
+            }
+        }
+        return gameObject;
+    }
+
+    @Override
     public GameObject getObject(GameObjectType gameObjectType)
     {
         switch(gameObjectType)
@@ -24,28 +45,5 @@ public class TileFactory implements Factory
             default:
                 return null;
         }
-    }
-
-    @Override
-    public Array<GameObject> createGameObjects(Array<GameObject> gameObject, GameObjectType gameObjectType, int amountTiles)
-    {
-        float x = -240;
-        float y = 210;
-        for (int i = 0; i < amountTiles; i++)
-        {
-            if(x <= 240){
-                this.gameObject = getObject(gameObjectType);
-                this.gameObject.setPosition(x,y);
-                gameObject.add(this.gameObject);
-                x=x+32;
-            }else{
-                x=-240;
-                if(y <= -210){
-                    return gameObject;
-                }
-                y=y-32;
-            }
-        }
-        return gameObject;
     }
 }
