@@ -40,17 +40,15 @@ public class Main extends ApplicationAdapter {
 		float startY = viewport.getMaxWorldHeight() / 2;
 		float endX = viewport.getMaxWorldWidth() / 2;
 		float endY = 0 - viewport.getMaxWorldHeight() / 2;
-		System.out.println(endY);
-
-		//map
+		System.out.println(startY);
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 200, -192, 160, 192, -192);
-
-		//decoration
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 10, -192, 160, 193, -169);
-
-
-		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, 0,0,0,0);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 255, -192, 160, 192, -160);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -32, 0, 192, -160);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -192, 160, 32, 0);
+		PlayerFactory playerFactory = new PlayerFactory();
+		DecorationFactory decorationFactory = new DecorationFactory();
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, -16,16,0,0);
+		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, -60,0,16,0);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
