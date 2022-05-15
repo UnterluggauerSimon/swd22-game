@@ -9,6 +9,7 @@ import at.compus02.swd.ss2022.game.factories.TileFactory;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -89,6 +90,27 @@ public class Main extends ApplicationAdapter {
 		}
 		font.draw(batch, "Hello Game", -220, -220);
 		batch.end();
+
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			float x = gameObjects.get(gameObjects.size - 1).getX();
+			float y = gameObjects.get(gameObjects.size - 1).getY();
+			gameObjects.get(gameObjects.size - 1).setPosition(x-1,y);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			float x = gameObjects.get(gameObjects.size - 1).getX();
+			float y = gameObjects.get(gameObjects.size - 1).getY();
+			gameObjects.get(gameObjects.size - 1).setPosition(x+1,y);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			float x = gameObjects.get(gameObjects.size - 1).getX();
+			float y = gameObjects.get(gameObjects.size - 1).getY();
+			gameObjects.get(gameObjects.size - 1).setPosition(x,y+1);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			float x = gameObjects.get(gameObjects.size - 1).getX();
+			float y = gameObjects.get(gameObjects.size - 1).getY();
+			gameObjects.get(gameObjects.size - 1).setPosition(x,y-1);
+		}
 	}
 
 	@Override
