@@ -33,23 +33,42 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
+		PlayerFactory playerFactory = new PlayerFactory();
+		DecorationFactory decorationFactory = new DecorationFactory();
+
 		float startX = 0 - viewport.getMaxWorldWidth() / 2;
 		float startY = viewport.getMaxWorldHeight() / 2;
 		float endX = viewport.getMaxWorldWidth() / 2;
 		float endY = 0 - viewport.getMaxWorldHeight() / 2;
-		System.out.println(endY);
+		System.out.println(startY);
+		//create Backgroudn
 		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 60, -100, 100, 100, -100);
-		//Wall Oben
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, 100, 100, 100);
-		//Wall Links
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, -100, -100, 100, -100);
-		//Wall Rechts
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Wall, 10, 100, 100, 100, -100);
-		PlayerFactory playerFactory = new PlayerFactory();
-		DecorationFactory decorationFactory = new DecorationFactory();
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 255, -192, 160, 192, -160);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -32, 0, 192, -160);
+		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -192, 160, 32, 0);
 
-		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, 0,0,0,0);
+		//create Decoration Top Left
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, 192, 64);
+
+		//create Decoration Top Right
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, 32, 160, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Log, 3, 32, 160, 192, 64);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, 32, 160, 192, 64);
+
+		//create Decoration Bottom Left
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, -32, -160);
+
+		//create Decoration Bottom Right
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, 32, 160, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, 32, 160, -32, -160);
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, 32, 160, -32, -160);
+
+		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, -16,-16,16,16);
+		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, -60,0,16,0);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
