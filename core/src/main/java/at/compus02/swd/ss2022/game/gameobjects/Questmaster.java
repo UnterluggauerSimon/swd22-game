@@ -32,4 +32,14 @@ public class Questmaster implements  GameObject
     {
         sprite.draw(batch);
     }
+
+    @Override
+    public float getX() {
+        return sprite.getX();
+    }
+
+    @Override
+    public float getY() {
+        return sprite.getY();
+    }
 }

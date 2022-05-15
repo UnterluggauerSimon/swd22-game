@@ -6,4 +6,7 @@ public interface GameObject {
     void act(float delta);
     void setPosition(float x, float y);
     void draw(SpriteBatch batch);
+
+    float getX();
+    float getY();
 }

@@ -26,4 +26,14 @@ public class Sign implements GameObject {
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
+
+    @Override
+    public float getX() {
+        return sprite.getX();
+    }
+
+    @Override
+    public float getY() {
+        return sprite.getY();
+    }
 }
