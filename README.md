@@ -1,6 +1,6 @@
 # SWDGame
 
-##Gruppe
+#Gruppe
 Mitglieder:
 - `Simon Unterluggauer`
 - `Florian Lirzer`
