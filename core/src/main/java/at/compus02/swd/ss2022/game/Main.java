@@ -3,13 +3,13 @@ package at.compus02.swd.ss2022.game;
 import at.compus02.swd.ss2022.game.factories.DecorationFactory;
 import at.compus02.swd.ss2022.game.factories.PlayerFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
-import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.factories.TileFactory;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -30,9 +30,13 @@ public class Main extends ApplicationAdapter {
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
+	private Sound mp3Sound;
 
 	@Override
 	public void create() {
+		Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
+		mp3Sound.loop(0.2f);
+
 		TileFactory tileFactory = new TileFactory();
 		PlayerFactory playerFactory = new PlayerFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
@@ -129,6 +133,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
+		mp3Sound.dispose();
 		batch.dispose();
 	}
 
