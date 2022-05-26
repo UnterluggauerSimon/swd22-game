@@ -1,12 +1,16 @@
 package at.compus02.swd.ss2022.game;
 
+import at.compus02.swd.ss2022.game.Umrechner.MapCalculator;
 import at.compus02.swd.ss2022.game.factories.DecorationFactory;
 import at.compus02.swd.ss2022.game.factories.PlayerFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
-import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.factories.TileFactory;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
+import at.compus02.swd.ss2022.game.observer.NewsAgency;
+import at.compus02.swd.ss2022.game.observer.PlayerChannel;
+import at.compus02.swd.ss2022.game.playableChars.MainEnemy;
+import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -31,45 +35,45 @@ public class Main extends ApplicationAdapter {
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
 
+	public MainPlayer mainPlayer;
+	public MainEnemy mainEnemy;
+
+	GameObject[][] newMap = new GameObject[16][16];
+	MapCalculator mapCalculator = new MapCalculator();
+
+	NewsAgency newsAgency = new NewsAgency();
+	PlayerChannel playerChannel = new PlayerChannel();
+
+
 	@Override
 	public void create() {
 		TileFactory tileFactory = new TileFactory();
-		PlayerFactory playerFactory = new PlayerFactory();
-		DecorationFactory decorationFactory = new DecorationFactory();
+		newsAgency.addObserver(playerChannel);
 
-		float startX = 0 - viewport.getMaxWorldWidth() / 2;
-		float startY = viewport.getMaxWorldHeight() / 2;
-		float endX = viewport.getMaxWorldWidth() / 2;
-		float endY = 0 - viewport.getMaxWorldHeight() / 2;
-		System.out.println(startY);
-		//create Backgroudn
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Water, 255, startX, endX, startY, endY);
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gras, 255, -192, 160, 192, -160);
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -32, 0, 192, -160);
-		gameObjects = tileFactory.createGameObjects(gameObjects, GameObjectType.Gravel, 40, -192, 160, 32, 0);
+		for (int i = 0; i < newMap.length; i++) {
+			for (int j = 0; j < newMap[i].length; j++) {
+				newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
+			}
+		}
 
-		//create Decoration Top Left
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, 192, 64);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, 192, 64);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, 192, 64);
+		for (int i = 2; i < newMap.length -2; i++) {
+			for (int j = 2; j < newMap[i].length -2 ; j++) {
+				newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gras, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
+			}
+		}
 
-		//create Decoration Top Right
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, 32, 160, 192, 64);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Log, 3, 32, 160, 192, 64);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, 32, 160, 192, 64);
+		for (int j = 5; j < newMap[5].length -2 ; j++) {
+			newMap[5][j] = tileFactory.createSingleGameObject(GameObjectType.Wall, mapCalculator.arrayInitToMapPixel(5), mapCalculator.arrayInitToMapPixel(j));
+		}
 
-		//create Decoration Bottom Left
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, -192, -64, -32, -160);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, -192, -64, -32, -160);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, -192, -64, -32, -160);
+		mainPlayer = MainPlayer.getInstance();
+		playerChannel.update("Spieler wurde erstellt");
+		gameObjects.add(mainPlayer);
 
-		//create Decoration Bottom Right
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Bush, 5, 32, 160, -32, -160);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.BigTree, 3, 32, 160, -32, -160);
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.LittleTree, 2, 32, 160, -32, -160);
+		mainEnemy = MainEnemy.getInstance();
+		mainEnemy.setPosition(160, 160);
+		gameObjects.add(mainEnemy);
 
-		gameObjects = decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, -16,-16,16,16);
-		gameObjects = playerFactory.createGameObjects(gameObjects, GameObjectType.Knight, 1, -60,0,16,0);
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
@@ -85,32 +89,48 @@ public class Main extends ApplicationAdapter {
 	private void draw() {
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
+
+		float newX = mainPlayer.getX();
+		float newY = mainPlayer.getY();
+
+		for (GameObject[] gameObject : newMap)
+		{
+			for (GameObject gameObject1 : gameObject)
+				gameObject1.draw(batch);
+		}
+
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
 		}
-		font.draw(batch, "Hello Game", -220, -220);
-		batch.end();
 
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			float x = gameObjects.get(gameObjects.size - 1).getX();
-			float y = gameObjects.get(gameObjects.size - 1).getY();
-			gameObjects.get(gameObjects.size - 1).setPosition(x-1,y);
+		if(mapCalculator.isMoveAllowed(newMap,mainPlayer))
+		{
+			if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+			{
+				mainPlayer.moveLeft();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				mainPlayer.moveRight();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				mainPlayer.moveUp();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				mainPlayer.moveDown();
+			}
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			float x = gameObjects.get(gameObjects.size - 1).getX();
-			float y = gameObjects.get(gameObjects.size - 1).getY();
-			gameObjects.get(gameObjects.size - 1).setPosition(x+1,y);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			float x = gameObjects.get(gameObjects.size - 1).getX();
-			float y = gameObjects.get(gameObjects.size - 1).getY();
-			gameObjects.get(gameObjects.size - 1).setPosition(x,y+1);
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			float x = gameObjects.get(gameObjects.size - 1).getX();
-			float y = gameObjects.get(gameObjects.size - 1).getY();
-			gameObjects.get(gameObjects.size - 1).setPosition(x,y-1);
-		}
+
+		mainEnemy.followPlayer(newMap);
+
+		font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
+		font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
+
+		font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
+
+
+		playerChannel.observePlayer();
+		Gdx.input.setInputProcessor(this.gameInput);
+		batch.end();
 	}
 
 	@Override

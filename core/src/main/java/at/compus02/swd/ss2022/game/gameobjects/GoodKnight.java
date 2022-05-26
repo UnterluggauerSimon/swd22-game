@@ -43,4 +43,10 @@ public class GoodKnight implements  GameObject
         return sprite.getY();
     }
 
+    @Override
+    public boolean isAllowedToWalk()
+    {
+        return false;
+    }
+
 }

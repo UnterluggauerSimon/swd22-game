@@ -18,7 +18,6 @@ public class TileWater implements  GameObject
     @Override
     public void act(float delta)
     {
-
     }
 
     @Override
@@ -41,5 +40,11 @@ public class TileWater implements  GameObject
     @Override
     public float getY() {
         return sprite.getY();
+    }
+
+    @Override
+    public boolean isAllowedToWalk()
+    {
+        return false;
     }
 }

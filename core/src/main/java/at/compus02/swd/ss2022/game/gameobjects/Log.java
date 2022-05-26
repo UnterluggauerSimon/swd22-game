@@ -43,4 +43,10 @@ public class Log implements  GameObject
     public float getY() {
         return sprite.getY();
     }
+
+    @Override
+    public boolean isAllowedToWalk()
+    {
+        return false;
+    }
 }

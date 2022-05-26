@@ -29,6 +29,14 @@ public class TileFactory implements Factory
         return gameObject;
     }
 
+    public GameObject createSingleGameObject(GameObjectType gameObjectType, float x, float y)
+    {
+        this.gameObject = getObject(gameObjectType);
+        this.gameObject.setPosition(x,y);
+        System.out.println(String.format("Created %s at X-Position %f and Y-Position %f", gameObjectType.name(), x, y));
+        return this.gameObject;
+    }
+
     @Override
     public GameObject getObject(GameObjectType gameObjectType)
     {

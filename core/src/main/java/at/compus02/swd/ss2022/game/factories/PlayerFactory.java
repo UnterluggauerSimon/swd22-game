@@ -19,6 +19,13 @@ public class PlayerFactory implements Factory
         return gameObject;
     }
 
+    public GameObject createSingleGameObject(GameObjectType gameObjectType)
+    {
+        this.gameObject = getObject(gameObjectType);
+        this.gameObject.setPosition(0,0);
+        return gameObject;
+    }
+
     @Override
     public GameObject getObject(GameObjectType gameObjectType)
     {

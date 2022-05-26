@@ -45,4 +45,10 @@ public class LittleTree implements  GameObject
     {
         return 0;
     }
+
+    @Override
+    public boolean isAllowedToWalk()
+    {
+        return false;
+    }
 }

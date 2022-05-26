@@ -9,4 +9,6 @@ public interface GameObject {
 
     float getX();
     float getY();
+
+    boolean isAllowedToWalk();
 }

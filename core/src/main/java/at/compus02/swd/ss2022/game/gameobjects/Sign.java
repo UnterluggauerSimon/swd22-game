@@ -36,4 +36,10 @@ public class Sign implements GameObject {
     public float getY() {
         return sprite.getY();
     }
+
+    @Override
+    public boolean isAllowedToWalk()
+    {
+        return false;
+    }
 }
