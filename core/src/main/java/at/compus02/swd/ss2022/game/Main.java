@@ -14,6 +14,7 @@ import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -34,6 +35,7 @@ public class Main extends ApplicationAdapter {
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
+	private Sound mp3Sound;
 
 	public MainPlayer mainPlayer;
 	public MainEnemy mainEnemy;
@@ -47,6 +49,9 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
+		mp3Sound.loop(0.2f);
+
 		TileFactory tileFactory = new TileFactory();
 		newsAgency.addObserver(playerChannel);
 
@@ -149,6 +154,7 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
+		mp3Sound.dispose();
 		batch.dispose();
 	}
 
