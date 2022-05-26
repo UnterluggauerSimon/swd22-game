@@ -132,6 +132,10 @@ public class Main extends ApplicationAdapter {
 
 		font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
 
+		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
+		{
+			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
+		}
 
 		playerChannel.observePlayer();
 		Gdx.input.setInputProcessor(this.gameInput);
