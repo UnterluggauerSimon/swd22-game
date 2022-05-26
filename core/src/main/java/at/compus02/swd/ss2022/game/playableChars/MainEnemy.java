@@ -45,24 +45,35 @@ public class MainEnemy extends BadKnight
 
     public void runFromPlayer(GameObject[][] newMap)
     {
-        float targetX = mainPlayer.getX();
-        float targetY = mainPlayer.getY();
+        float targetX = 130;
+        float targetY = 130;
+
+        if(mainPlayer.getX() > targetX)
+        {
+            mainEnemy.moveLeft(newMap);
+            return;
+        }
+        if(mainPlayer.getY() > targetY)
+        {
+            mainEnemy.moveDown(newMap);
+            return;
+        }
 
         if(mainEnemy.getX() < targetX)
         {
-            mainEnemy.moveLeft(newMap);
+            mainEnemy.moveRight(newMap);
         }
         if(mainEnemy.getX() > targetX)
         {
-            mainEnemy.moveRight(newMap);
+            mainEnemy.moveLeft(newMap);
         }
         if(mainEnemy.getY() < targetY)
         {
-            mainEnemy.moveDown(newMap);
+            mainEnemy.moveUp(newMap);
         }
         if(mainEnemy.getY() > targetY)
         {
-            mainEnemy.moveUp(newMap);
+            mainEnemy.moveDown(newMap);
         }
     }
 

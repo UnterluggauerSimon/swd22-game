@@ -53,6 +53,7 @@ public class Main extends ApplicationAdapter {
 		mp3Sound.loop(0.2f);
 
 		TileFactory tileFactory = new TileFactory();
+		DecorationFactory decorationFactory = new DecorationFactory();
 		newsAgency.addObserver(playerChannel);
 
 		for (int i = 0; i < newMap.length; i++) {
@@ -71,12 +72,14 @@ public class Main extends ApplicationAdapter {
 			newMap[5][j] = tileFactory.createSingleGameObject(GameObjectType.Wall, mapCalculator.arrayInitToMapPixel(5), mapCalculator.arrayInitToMapPixel(j));
 		}
 
+		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
+
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
 
 		mainEnemy = MainEnemy.getInstance();
-		mainEnemy.setPosition(160, 160);
+		mainEnemy.setPosition(0, 0);
 		gameObjects.add(mainEnemy);
 
 		batch = new SpriteBatch();
@@ -125,7 +128,8 @@ public class Main extends ApplicationAdapter {
 			}
 		}
 
-		mainEnemy.followPlayer(newMap);
+		//mainEnemy.followPlayer(newMap);
+		mainEnemy.runFromPlayer(newMap);
 
 		font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
 		font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
