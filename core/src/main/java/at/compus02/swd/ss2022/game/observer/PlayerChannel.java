@@ -2,7 +2,7 @@ package at.compus02.swd.ss2022.game.observer;
 
 import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 
-public class PlayerChannel implements Channel
+public class PlayerChannel implements Observer
 {
     private String news;
     private float oldX;
@@ -20,23 +20,5 @@ public class PlayerChannel implements Channel
     public void update(Object o)
     {
         System.out.println((String) o);
-    }
-
-    public void observePlayer()
-    {
-
-        mainPlayer = MainPlayer.getInstance();
-
-        if(mainPlayer.getX() > oldX)
-            update("Player moved right");
-        if(mainPlayer.getX() < oldX)
-            update("Player moved left");
-        if(mainPlayer.getY() > oldY)
-            update("Player moved up");
-        if(mainPlayer.getY() < oldY)
-            update("Player moved down");
-
-        oldX = mainPlayer.getX();
-        oldY = mainPlayer.getY();
     }
 }

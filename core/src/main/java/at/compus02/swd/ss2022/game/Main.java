@@ -2,12 +2,11 @@ package at.compus02.swd.ss2022.game;
 
 import at.compus02.swd.ss2022.game.Umrechner.MapCalculator;
 import at.compus02.swd.ss2022.game.factories.DecorationFactory;
-import at.compus02.swd.ss2022.game.factories.PlayerFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.factories.TileFactory;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
-import at.compus02.swd.ss2022.game.observer.NewsAgency;
+import at.compus02.swd.ss2022.game.observer.PlayerStatus;
 import at.compus02.swd.ss2022.game.observer.PlayerChannel;
 import at.compus02.swd.ss2022.game.playableChars.MainEnemy;
 import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
@@ -40,21 +39,24 @@ public class Main extends ApplicationAdapter {
 	public MainPlayer mainPlayer;
 	public MainEnemy mainEnemy;
 
+	public String movedDirection;
+
 	GameObject[][] newMap = new GameObject[16][16];
 	MapCalculator mapCalculator = new MapCalculator();
 
-	NewsAgency newsAgency = new NewsAgency();
+	PlayerStatus playerListener = new PlayerStatus();
 	PlayerChannel playerChannel = new PlayerChannel();
-
 
 	@Override
 	public void create() {
+		//Background music
 		Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
 		mp3Sound.loop(0.2f);
 
+
 		TileFactory tileFactory = new TileFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
-		newsAgency.addObserver(playerChannel);
+		playerListener.addObserver(playerChannel);
 
 		for (int i = 0; i < newMap.length; i++) {
 			for (int j = 0; j < newMap[i].length; j++) {
@@ -115,16 +117,24 @@ public class Main extends ApplicationAdapter {
 		{
 			if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
 			{
+				movedDirection = "Player moved left";
 				mainPlayer.moveLeft();
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				movedDirection = "Player moved right";
 				mainPlayer.moveRight();
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				movedDirection = "Player moved up";
 				mainPlayer.moveUp();
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				movedDirection = "Player moved down";
 				mainPlayer.moveDown();
+			}
+			if(movedDirection != null){ // Player moved
+				playerListener.notifyUpdate(movedDirection);
+				movedDirection = null;
 			}
 		}
 
@@ -141,7 +151,6 @@ public class Main extends ApplicationAdapter {
 			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
 		}
 
-		playerChannel.observePlayer();
 		Gdx.input.setInputProcessor(this.gameInput);
 		batch.end();
 	}
