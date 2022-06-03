@@ -1,5 +1,7 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
+import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
+import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +14,8 @@ public class Bridge implements  GameObject
 
     public Bridge()
     {
-        image = new Texture("bridge.png");
+        AssetRepository assetRepository = AssetRepository.getAssetRepository();
+        image = assetRepository.getTexture(GameObjectType.Bridge);
         sprite = new Sprite(image);
     }
 

@@ -156,11 +156,10 @@ public class Main extends ApplicationAdapter {
 		//mainEnemy.followPlayer(newMap);
 		mainEnemy.runFromPlayer(newMap);
 
-		font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
-		font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
+		//font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
+		//font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
 
-		font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
-
+		//font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
 		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
 		{
 			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
