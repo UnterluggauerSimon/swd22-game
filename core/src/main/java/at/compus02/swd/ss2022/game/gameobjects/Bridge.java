@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GoodKnight implements  GameObject
+public class Bridge implements  GameObject
 {
+
     private Texture image;
     private Sprite sprite;
 
-    public GoodKnight()
+    public Bridge()
     {
         AssetRepository assetRepository = AssetRepository.getAssetRepository();
-        image = assetRepository.getTexture(GameObjectType.GoodKnight);
+        image = assetRepository.getTexture(GameObjectType.Bridge);
         sprite = new Sprite(image);
     }
 
@@ -49,7 +50,6 @@ public class GoodKnight implements  GameObject
     @Override
     public boolean isAllowedToWalk()
     {
-        return false;
+        return true;
     }
-
 }

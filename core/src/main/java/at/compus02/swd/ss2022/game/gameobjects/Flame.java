@@ -1,5 +1,7 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
+import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
+import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +11,8 @@ public class Flame implements  GameObject {
     private Sprite sprite;
 
     public Flame() {
-        image = new Texture("flames.png");
+        AssetRepository assetRepository = AssetRepository.getAssetRepository();
+        image = assetRepository.getTexture(GameObjectType.Flame);
         sprite = new Sprite(image);
     }
 

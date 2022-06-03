@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game;
 
 import at.compus02.swd.ss2022.game.Umrechner.MapCalculator;
+import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
 import at.compus02.swd.ss2022.game.factories.DecorationFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
@@ -30,6 +31,8 @@ public class Main extends ApplicationAdapter {
 
 	private Array<GameObject> gameObjects = new Array<>();
 
+	AssetRepository assetRepository = AssetRepository.getAssetRepository();
+
 	private final float updatesPerSecond = 60;
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
@@ -49,9 +52,9 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		//Background music
-		Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
-		mp3Sound.loop(0.2f);
-
+		//Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
+		//mp3Sound.loop(0.2f);
+		assetRepository.preloadAssests();
 
 		TileFactory tileFactory = new TileFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
@@ -71,6 +74,18 @@ public class Main extends ApplicationAdapter {
 		for (int j = 5; j < newMap[5].length -2 ; j++) {
 			newMap[5][j] = tileFactory.createSingleGameObject(GameObjectType.Wall, mapCalculator.arrayInitToMapPixel(5), mapCalculator.arrayInitToMapPixel(j));
 		}
+
+		for (int j = 2; j < 6 ; j++) {
+			newMap[10][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(j));
+		}
+
+		for (int j = 10; j < newMap.length ; j++) {
+			newMap[j][6] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(j), mapCalculator.arrayInitToMapPixel(6));
+		}
+
+		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
+		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
+
 
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
 
@@ -133,11 +148,10 @@ public class Main extends ApplicationAdapter {
 		mainEnemy.followPlayer(newMap);
 		//mainEnemy.runFromPlayer(newMap);
 
-		font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
-		font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
+		//font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
+		//font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
 
-		font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
-
+		//font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
 		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
 		{
 			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
@@ -163,6 +177,8 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
+		System.out.println("Dispose");
+		assetRepository.dispose();
 		mp3Sound.dispose();
 		batch.dispose();
 	}

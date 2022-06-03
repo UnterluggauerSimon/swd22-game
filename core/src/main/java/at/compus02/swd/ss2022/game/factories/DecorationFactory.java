@@ -61,5 +61,4 @@ public class DecorationFactory implements Factory
                 return null;
         }
     }
-
 }

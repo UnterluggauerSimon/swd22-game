@@ -50,6 +50,8 @@ public class TileFactory implements Factory
                 return new TileWall();
             case Water:
                 return new TileWater();
+            case Bridge:
+                return new Bridge();
             default:
                 return null;
         }
