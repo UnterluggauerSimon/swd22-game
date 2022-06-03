@@ -44,7 +44,6 @@ public class Main extends ApplicationAdapter {
 	GameObject[][] newMap = new GameObject[16][16];
 	MapCalculator mapCalculator = new MapCalculator();
 
-	PlayerStatus playerListener = new PlayerStatus();
 	PlayerChannel playerChannel = new PlayerChannel();
 
 	@Override
@@ -56,7 +55,6 @@ public class Main extends ApplicationAdapter {
 
 		TileFactory tileFactory = new TileFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
-		playerListener.addObserver(playerChannel);
 
 		for (int i = 0; i < newMap.length; i++) {
 			for (int j = 0; j < newMap[i].length; j++) {
@@ -79,6 +77,9 @@ public class Main extends ApplicationAdapter {
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
+
+
+		mainPlayer.addObserver(playerChannel);
 
 		mainEnemy = MainEnemy.getInstance();
 		mainEnemy.setPosition(0, 0);
@@ -112,34 +113,25 @@ public class Main extends ApplicationAdapter {
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
 		}
-
 		if(mapCalculator.isMoveAllowed(newMap,mainPlayer))
 		{
 			if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
 			{
-				movedDirection = "Player moved left";
-				mainPlayer.moveLeft();
+				mainPlayer.moveLeft(Input.Keys.LEFT);
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				movedDirection = "Player moved right";
-				mainPlayer.moveRight();
+				mainPlayer.moveRight(Input.Keys.RIGHT);
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				movedDirection = "Player moved up";
-				mainPlayer.moveUp();
+				mainPlayer.moveUp(Input.Keys.UP);
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				movedDirection = "Player moved down";
-				mainPlayer.moveDown();
-			}
-			if(movedDirection != null){ // Player moved
-				playerListener.notifyUpdate(movedDirection);
-				movedDirection = null;
+				mainPlayer.moveDown(Input.Keys.DOWN);
 			}
 		}
 
-		//mainEnemy.followPlayer(newMap);
-		mainEnemy.runFromPlayer(newMap);
+		mainEnemy.followPlayer(newMap);
+		//mainEnemy.runFromPlayer(newMap);
 
 		font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
 		font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
