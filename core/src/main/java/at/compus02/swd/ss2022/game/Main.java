@@ -177,7 +177,6 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
-		System.out.println("Dispose");
 		assetRepository.dispose();
 		mp3Sound.dispose();
 		batch.dispose();
