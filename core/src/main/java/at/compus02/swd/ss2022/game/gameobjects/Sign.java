@@ -1,5 +1,7 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
+import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
+import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +11,8 @@ public class Sign implements GameObject {
     private Sprite sprite;
 
     public Sign() {
-        image = new Texture("sign.png");
+        AssetRepository assetRepository = AssetRepository.getAssetRepository();
+        image = assetRepository.getTexture(GameObjectType.Sign);
         sprite = new Sprite(image);
     }
     @Override
