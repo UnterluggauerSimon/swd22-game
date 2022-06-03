@@ -1,5 +1,7 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
+import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
+import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,7 +13,8 @@ public class TileGravel implements  GameObject
 
     public TileGravel()
     {
-        image = new Texture("tile_gravel.png");
+        AssetRepository assetRepository = AssetRepository.getAssetRepository();
+        image = assetRepository.getTexture(GameObjectType.Gravel);
         sprite = new Sprite(image);
     }
 

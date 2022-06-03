@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game;
 
 import at.compus02.swd.ss2022.game.Umrechner.MapCalculator;
+import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
 import at.compus02.swd.ss2022.game.factories.DecorationFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
@@ -30,6 +31,8 @@ public class Main extends ApplicationAdapter {
 
 	private Array<GameObject> gameObjects = new Array<>();
 
+	AssetRepository assetRepository = AssetRepository.getAssetRepository();
+
 	private final float updatesPerSecond = 60;
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
@@ -50,9 +53,9 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create() {
 		//Background music
-		Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
-		mp3Sound.loop(0.2f);
-
+		//Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
+		//mp3Sound.loop(0.2f);
+		assetRepository.preloadAssests();
 
 		TileFactory tileFactory = new TileFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
@@ -171,6 +174,8 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
+		System.out.println("Dispose");
+		assetRepository.dispose();
 		mp3Sound.dispose();
 		batch.dispose();
 	}
