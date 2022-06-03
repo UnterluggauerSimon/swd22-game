@@ -53,7 +53,6 @@ public class Main extends ApplicationAdapter {
 		Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
 		mp3Sound.loop(0.2f);
 
-
 		TileFactory tileFactory = new TileFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
 		playerListener.addObserver(playerChannel);
@@ -73,6 +72,18 @@ public class Main extends ApplicationAdapter {
 		for (int j = 5; j < newMap[5].length -2 ; j++) {
 			newMap[5][j] = tileFactory.createSingleGameObject(GameObjectType.Wall, mapCalculator.arrayInitToMapPixel(5), mapCalculator.arrayInitToMapPixel(j));
 		}
+
+		for (int j = 2; j < 6 ; j++) {
+			newMap[10][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(j));
+		}
+
+		for (int j = 10; j < newMap.length ; j++) {
+			newMap[j][6] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(j), mapCalculator.arrayInitToMapPixel(6));
+		}
+
+		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
+		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
+
 
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
 
