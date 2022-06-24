@@ -7,8 +7,8 @@ import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.factories.TileFactory;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
-import at.compus02.swd.ss2022.game.observer.PlayerStatus;
 import at.compus02.swd.ss2022.game.observer.PlayerChannel;
+import at.compus02.swd.ss2022.game.playableChars.Enemy;
 import at.compus02.swd.ss2022.game.playableChars.MainEnemy;
 import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -30,6 +30,7 @@ public class Main extends ApplicationAdapter {
 	private GameInput gameInput = new GameInput();
 
 	private Array<GameObject> gameObjects = new Array<>();
+	private Array<GameObject> lifes = new Array<>();
 
 	AssetRepository assetRepository = AssetRepository.getAssetRepository();
 
@@ -49,6 +50,7 @@ public class Main extends ApplicationAdapter {
 	MapCalculator mapCalculator = new MapCalculator();
 
 	PlayerChannel playerChannel = new PlayerChannel();
+
 
 	@Override
 	public void create() {
@@ -89,7 +91,8 @@ public class Main extends ApplicationAdapter {
 
 
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
-		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Hearth, 3, -50, 50, 130, 130));
+
+
 
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
@@ -99,12 +102,16 @@ public class Main extends ApplicationAdapter {
 		mainPlayer.addObserver(playerChannel);
 
 		mainEnemy = MainEnemy.getInstance();
-		mainEnemy.setPosition(0, 0);
+		mainEnemy.setPosition(30, 0);
 		gameObjects.add(mainEnemy);
 
 		enemy = Enemy.getInstance();
 		enemy.setPosition(15, 3);
 		gameObjects.add(enemy);
+
+		lifes.addAll(decorationFactory.createGameObjects(lifes, GameObjectType.Hearth, 1, -50, -50, 130, 130));
+		lifes.addAll(decorationFactory.createGameObjects(lifes, GameObjectType.Hearth, 1, -18, -18, 130, 130));
+		lifes.addAll(decorationFactory.createGameObjects(lifes, GameObjectType.Hearth, 1, 14, 14, 130, 130));
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -134,6 +141,11 @@ public class Main extends ApplicationAdapter {
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
 		}
+
+		for(GameObject gameObject : lifes) {
+			gameObject.draw(batch);
+		}
+
 		if(mapCalculator.isMoveAllowed(newMap,mainPlayer))
 		{
 			if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
@@ -161,6 +173,10 @@ public class Main extends ApplicationAdapter {
 		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
 		{
 			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
+			if(lifes.size > 0)
+			{
+				lifes.removeIndex(lifes.size - 1);
+			}
 		}
 
 
