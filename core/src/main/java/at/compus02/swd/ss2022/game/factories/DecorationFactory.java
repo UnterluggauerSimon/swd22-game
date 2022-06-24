@@ -61,5 +61,11 @@ public class DecorationFactory implements Factory
                 return null;
         }
     }
+    public GameObject createSingleGameObject(GameObjectType gameObjectType, int x, int y)
+    {
+        this.gameObject = getObject(gameObjectType);
+        this.gameObject.setPosition(x,y);
+        return gameObject;
+    }
 
 }

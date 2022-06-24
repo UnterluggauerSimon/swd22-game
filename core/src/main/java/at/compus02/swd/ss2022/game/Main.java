@@ -109,9 +109,9 @@ public class Main extends ApplicationAdapter {
 		enemy.setPosition(15, 3);
 		gameObjects.add(enemy);
 
-		lifes.addAll(decorationFactory.createGameObjects(lifes, GameObjectType.Hearth, 1, -50, -50, 130, 130));
-		lifes.addAll(decorationFactory.createGameObjects(lifes, GameObjectType.Hearth, 1, -18, -18, 130, 130));
-		lifes.addAll(decorationFactory.createGameObjects(lifes, GameObjectType.Hearth, 1, 14, 14, 130, 130));
+		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
+		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
+		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, 14, 130));
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -126,6 +126,7 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void draw() {
+
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
 
@@ -176,8 +177,10 @@ public class Main extends ApplicationAdapter {
 			if(lifes.size > 0)
 			{
 				lifes.removeIndex(lifes.size - 1);
+				mainEnemy.setPosition(130, 130);
 			}
 		}
+
 
 
 
