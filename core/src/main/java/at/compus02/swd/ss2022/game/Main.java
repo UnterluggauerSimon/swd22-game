@@ -84,7 +84,7 @@ public class Main extends ApplicationAdapter {
 			newMap[j][6] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(j), mapCalculator.arrayInitToMapPixel(6));
 		}
 
-		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
+		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
 		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
 
 
