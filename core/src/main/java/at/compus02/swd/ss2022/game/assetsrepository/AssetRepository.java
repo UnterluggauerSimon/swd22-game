@@ -42,7 +42,8 @@ public class AssetRepository
         textures.put(GameObjectType.Gravel,new Texture( "tile_gravel.png"));
         textures.put(GameObjectType.Wall,new Texture( "tile_wall.png"));
         textures.put(GameObjectType.Water,new Texture( "tile_water.png"));
-        textures.put(GameObjectType.Bridge, new Texture("bridge.png"));
+        textures.put(GameObjectType.Bridge, new Texture("bridge_vertical.png"));
+        textures.put(GameObjectType.BridgeUp, new Texture("bridge_up.png"));
     }
 
     public Texture getTexture(GameObjectType object)

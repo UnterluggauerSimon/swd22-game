@@ -18,5 +18,6 @@ public enum GameObjectType
     GoodKnight,
     BadKnight,
     Bridge,
-    Questmaster
+    Questmaster,
+    BridgeUp
 }

@@ -52,6 +52,8 @@ public class TileFactory implements Factory
                 return new TileWater();
             case Bridge:
                 return new Bridge();
+            case BridgeUp:
+                return new Bridge_up();
             default:
                 return null;
         }
