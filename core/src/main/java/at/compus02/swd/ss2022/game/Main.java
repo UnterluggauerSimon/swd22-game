@@ -1,6 +1,6 @@
 package at.compus02.swd.ss2022.game;
 
-import at.compus02.swd.ss2022.game.Umrechner.MapCalculator;
+import at.compus02.swd.ss2022.game.converter.MapCalculator;
 import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
 import at.compus02.swd.ss2022.game.factories.DecorationFactory;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;

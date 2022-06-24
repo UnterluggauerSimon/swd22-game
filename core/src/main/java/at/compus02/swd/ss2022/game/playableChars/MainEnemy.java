@@ -1,6 +1,6 @@
 package at.compus02.swd.ss2022.game.playableChars;
 
-import at.compus02.swd.ss2022.game.Umrechner.MapCalculator;
+import at.compus02.swd.ss2022.game.converter.MapCalculator;
 import at.compus02.swd.ss2022.game.gameobjects.BadKnight;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 

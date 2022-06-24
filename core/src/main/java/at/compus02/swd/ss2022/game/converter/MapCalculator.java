@@ -1,7 +1,6 @@
-package at.compus02.swd.ss2022.game.Umrechner;
+package at.compus02.swd.ss2022.game.converter;
 
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
-import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
