@@ -66,6 +66,11 @@ public class MainPlayer extends Knight implements Subject
         this.previousDirection = key;
     }
 
+    public void eliminate(int key)
+    {
+
+    }
+
     public void addObserver(Observer channel) {
         this.channels.add(channel);
     }

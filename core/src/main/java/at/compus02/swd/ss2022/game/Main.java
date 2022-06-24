@@ -41,6 +41,7 @@ public class Main extends ApplicationAdapter {
 
 	public MainPlayer mainPlayer;
 	public MainEnemy mainEnemy;
+	public Enemy enemy;
 
 	public String movedDirection;
 
@@ -88,6 +89,7 @@ public class Main extends ApplicationAdapter {
 
 
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
+		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Hearth, 3, -50, 50, 130, 130));
 
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
@@ -99,6 +101,10 @@ public class Main extends ApplicationAdapter {
 		mainEnemy = MainEnemy.getInstance();
 		mainEnemy.setPosition(0, 0);
 		gameObjects.add(mainEnemy);
+
+		enemy = Enemy.getInstance();
+		enemy.setPosition(15, 3);
+		gameObjects.add(enemy);
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -146,7 +152,7 @@ public class Main extends ApplicationAdapter {
 		}
 
 		mainEnemy.followPlayer(newMap);
-		//mainEnemy.runFromPlayer(newMap);
+		enemy.runFromPlayer(newMap);
 
 		//font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
 		//font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
@@ -156,6 +162,8 @@ public class Main extends ApplicationAdapter {
 		{
 			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
 		}
+
+
 
 		Gdx.input.setInputProcessor(this.gameInput);
 		batch.end();
