@@ -98,11 +98,11 @@ public class Main extends ApplicationAdapter {
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
 
-		Enemy enemy = new Enemy(GameObjectType.Log);
+		Enemy enemy = new Enemy(GameObjectType.Log, 0);
 		enemy.setPosition(40,40);
 		enemies.add(enemy);
 
-		Enemy enemy2 = new Enemy(GameObjectType.Questmaster);
+		Enemy enemy2 = new Enemy(GameObjectType.Questmaster, 1);
 		enemy2.setPosition(40,40);
 		enemies.add(enemy2);
 
