@@ -32,35 +32,42 @@ public class MainPlayer extends Knight implements Subject
     public void moveLeft(int key)
     {
         movedDirection = "Player moved left";
-        mainPlayer.setPosition(mainPlayer.getX()-4, mainPlayer.getY());
-        if(this.previousDirection != key){
+        mainPlayer.setPosition(mainPlayer.getX() - 4, mainPlayer.getY());
+        if (this.previousDirection != key)
+        {
             notifyUpdate(movedDirection);
         }
         this.previousDirection = key;
     }
+
     public void moveRight(int key)
     {
         movedDirection = "Player moved right";
-        mainPlayer.setPosition(mainPlayer.getX()+4, mainPlayer.getY());
-        if(this.previousDirection != key){
+        mainPlayer.setPosition(mainPlayer.getX() + 4, mainPlayer.getY());
+        if (this.previousDirection != key)
+        {
             notifyUpdate(movedDirection);
         }
         this.previousDirection = key;
     }
+
     public void moveUp(int key)
     {
         movedDirection = "Player moved up";
-        mainPlayer.setPosition(mainPlayer.getX(), mainPlayer.getY()+4);
-        if(this.previousDirection != key){
+        mainPlayer.setPosition(mainPlayer.getX(), mainPlayer.getY() + 4);
+        if (this.previousDirection != key)
+        {
             notifyUpdate(movedDirection);
         }
         this.previousDirection = key;
     }
+
     public void moveDown(int key)
     {
         movedDirection = "Player moved down";
-        mainPlayer.setPosition(mainPlayer.getX(), mainPlayer.getY()-4);
-        if(this.previousDirection != key){
+        mainPlayer.setPosition(mainPlayer.getX(), mainPlayer.getY() - 4);
+        if (this.previousDirection != key)
+        {
             notifyUpdate(movedDirection);
         }
         this.previousDirection = key;
@@ -71,17 +78,21 @@ public class MainPlayer extends Knight implements Subject
 
     }
 
-    public void addObserver(Observer channel) {
+    public void addObserver(Observer channel)
+    {
         this.channels.add(channel);
     }
 
-    public void removeObserver(Observer channel) {
+    public void removeObserver(Observer channel)
+    {
         this.channels.remove(channel);
     }
 
-    public void notifyUpdate(String message) {
+    public void notifyUpdate(String message)
+    {
         this.message = message;
-        for (Observer channel : this.channels) {
+        for (Observer channel : this.channels)
+        {
             channel.update(this.message);
         }
     }

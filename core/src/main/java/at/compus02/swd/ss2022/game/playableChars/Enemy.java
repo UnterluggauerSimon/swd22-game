@@ -25,30 +25,30 @@ public class Enemy extends GoodKnight
         float targetX = 130;
         float targetY = 130;
 
-        if(mainPlayer.getX() > targetX)
+        if (mainPlayer.getX() > targetX)
         {
             Enemy.moveLeft(newMap);
             return;
         }
-        if(mainPlayer.getY() > targetY)
+        if (mainPlayer.getY() > targetY)
         {
             Enemy.moveDown(newMap);
             return;
         }
 
-        if(Enemy.getX() < targetX)
+        if (Enemy.getX() < targetX)
         {
             Enemy.moveRight(newMap);
         }
-        if(Enemy.getX() > targetX)
+        if (Enemy.getX() > targetX)
         {
             Enemy.moveLeft(newMap);
         }
-        if(Enemy.getY() < targetY)
+        if (Enemy.getY() < targetY)
         {
             Enemy.moveUp(newMap);
         }
-        if(Enemy.getY() > targetY)
+        if (Enemy.getY() > targetY)
         {
             Enemy.moveDown(newMap);
         }
@@ -56,30 +56,33 @@ public class Enemy extends GoodKnight
 
     public void moveLeft(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, Enemy.getX()-1,Enemy.getY()))
+        if (mapCalculator.isMoveAllowed(newMap, Enemy.getX() - 1, Enemy.getY()))
         {
-            Enemy.setPosition(Enemy.getX()-1, Enemy.getY());
+            Enemy.setPosition(Enemy.getX() - 1, Enemy.getY());
         }
     }
+
     public void moveRight(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, Enemy.getX()+1,Enemy.getY()))
+        if (mapCalculator.isMoveAllowed(newMap, Enemy.getX() + 1, Enemy.getY()))
         {
-            Enemy.setPosition(Enemy.getX()+1, Enemy.getY());
+            Enemy.setPosition(Enemy.getX() + 1, Enemy.getY());
         }
     }
+
     public void moveUp(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, Enemy.getX(),Enemy.getY()+1))
+        if (mapCalculator.isMoveAllowed(newMap, Enemy.getX(), Enemy.getY() + 1))
         {
-            Enemy.setPosition(Enemy.getX(), Enemy.getY()+1);
+            Enemy.setPosition(Enemy.getX(), Enemy.getY() + 1);
         }
     }
+
     public void moveDown(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, Enemy.getX(),Enemy.getY()-1))
+        if (mapCalculator.isMoveAllowed(newMap, Enemy.getX(), Enemy.getY() - 1))
         {
-            Enemy.setPosition(Enemy.getX(), Enemy.getY()-1);
+            Enemy.setPosition(Enemy.getX(), Enemy.getY() - 1);
         }
     }
 }
