@@ -184,6 +184,10 @@ public class Main extends ApplicationAdapter {
 				lifes.removeIndex(lifes.size - 1);
 				mainEnemy.setPosition(130, 130);
 			}
+			else if (lifes.size == 0)
+			{
+				dispose();
+			}
 		}
 
 

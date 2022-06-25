@@ -25,19 +25,19 @@ public class MainEnemy extends BadKnight
         float targetX = mainPlayer.getX();
         float targetY = mainPlayer.getY();
 
-        if(mainEnemy.getX() > targetX)
+        if (mainEnemy.getX() > targetX)
         {
             mainEnemy.moveLeft(newMap);
         }
-        if(mainEnemy.getX() < targetX)
+        if (mainEnemy.getX() < targetX)
         {
             mainEnemy.moveRight(newMap);
         }
-        if(mainEnemy.getY() > targetY)
+        if (mainEnemy.getY() > targetY)
         {
             mainEnemy.moveDown(newMap);
         }
-        if(mainEnemy.getY() < targetY)
+        if (mainEnemy.getY() < targetY)
         {
             mainEnemy.moveUp(newMap);
         }
@@ -48,30 +48,30 @@ public class MainEnemy extends BadKnight
         float targetX = 130;
         float targetY = 130;
 
-        if(mainPlayer.getX() > targetX)
+        if (mainPlayer.getX() > targetX)
         {
             mainEnemy.moveLeft(newMap);
             return;
         }
-        if(mainPlayer.getY() > targetY)
+        if (mainPlayer.getY() > targetY)
         {
             mainEnemy.moveDown(newMap);
             return;
         }
 
-        if(mainEnemy.getX() < targetX)
+        if (mainEnemy.getX() < targetX)
         {
             mainEnemy.moveRight(newMap);
         }
-        if(mainEnemy.getX() > targetX)
+        if (mainEnemy.getX() > targetX)
         {
             mainEnemy.moveLeft(newMap);
         }
-        if(mainEnemy.getY() < targetY)
+        if (mainEnemy.getY() < targetY)
         {
             mainEnemy.moveUp(newMap);
         }
-        if(mainEnemy.getY() > targetY)
+        if (mainEnemy.getY() > targetY)
         {
             mainEnemy.moveDown(newMap);
         }
@@ -79,30 +79,33 @@ public class MainEnemy extends BadKnight
 
     public void moveLeft(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, mainEnemy.getX()-1,mainEnemy.getY()))
+        if (mapCalculator.isMoveAllowed(newMap, mainEnemy.getX() - 1, mainEnemy.getY()))
         {
-            mainEnemy.setPosition(mainEnemy.getX()-1, mainEnemy.getY());
+            mainEnemy.setPosition(mainEnemy.getX() - 1, mainEnemy.getY());
         }
     }
+
     public void moveRight(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, mainEnemy.getX()+1,mainEnemy.getY()))
+        if (mapCalculator.isMoveAllowed(newMap, mainEnemy.getX() + 1, mainEnemy.getY()))
         {
-            mainEnemy.setPosition(mainEnemy.getX()+1, mainEnemy.getY());
+            mainEnemy.setPosition(mainEnemy.getX() + 1, mainEnemy.getY());
         }
     }
+
     public void moveUp(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, mainEnemy.getX(),mainEnemy.getY()+1))
+        if (mapCalculator.isMoveAllowed(newMap, mainEnemy.getX(), mainEnemy.getY() + 1))
         {
-            mainEnemy.setPosition(mainEnemy.getX(), mainEnemy.getY()+1);
+            mainEnemy.setPosition(mainEnemy.getX(), mainEnemy.getY() + 1);
         }
     }
+
     public void moveDown(GameObject[][] newMap)
     {
-        if(mapCalculator.isMoveAllowed(newMap, mainEnemy.getX(),mainEnemy.getY()-1))
+        if (mapCalculator.isMoveAllowed(newMap, mainEnemy.getX(), mainEnemy.getY() - 1))
         {
-            mainEnemy.setPosition(mainEnemy.getX(), mainEnemy.getY()-1);
+            mainEnemy.setPosition(mainEnemy.getX(), mainEnemy.getY() - 1);
         }
     }
 }
