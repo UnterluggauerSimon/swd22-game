@@ -51,7 +51,7 @@ public class Main extends ApplicationAdapter {
 
 	GameObject[][] newMap = new GameObject[16][16];
 	MapCalculator mapCalculator = new MapCalculator();
-
+    MoveChars moveChars = new MoveChars();
 	PlayerChannel playerChannel = new PlayerChannel();
 
 
@@ -97,11 +97,6 @@ public class Main extends ApplicationAdapter {
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
-		mainPlayer.addObserver(playerChannel);
-
-		mainEnemy = MainEnemy.getInstance();
-		mainEnemy.setPosition(30, 0);
-		gameObjects.add(mainEnemy);
 
 		Enemy enemy = new Enemy(GameObjectType.Log);
 		enemy.setPosition(40,40);
@@ -110,9 +105,8 @@ public class Main extends ApplicationAdapter {
 		Enemy enemy2 = new Enemy(GameObjectType.Questmaster);
 		enemy2.setPosition(40,40);
 		enemies.add(enemy2);
-//		enemy = Enemy.getInstance();
-		//enemy.setPosition(15, 3);
-//		gameObjects.add(enemy);
+
+		moveChars.addObserver(playerChannel);
 
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
@@ -135,8 +129,6 @@ public class Main extends ApplicationAdapter {
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
 		int counter = 0;
-
-		MoveChars moveChars = new MoveChars();
 
 		for (GameObject[] gameObject : newMap)
 		{
@@ -167,22 +159,19 @@ public class Main extends ApplicationAdapter {
 			mainPlayer.eliminate(Input.Keys.F);
 		}
 
-		//mainEnemy.followPlayer(newMap);
-		//enemy.runFromPlayer(newMap);
-
-		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
-		{
-			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
-			if(lifes.size > 0)
-			{
-				lifes.removeIndex(lifes.size - 1);
-				mainEnemy.setPosition(130, 130);
-			}
-			else if (lifes.size == 0)
-			{
-				dispose();
-			}
-		}
+	//	if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
+	//	{
+	//		font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
+	//		if(lifes.size > 0)
+	//		{
+	//			lifes.removeIndex(lifes.size - 1);
+	//			mainEnemy.setPosition(130, 130);
+	//		}
+	//		else if (lifes.size == 0)
+	//		{
+	//			dispose();
+	//		}
+	//	}
 
 		Gdx.input.setInputProcessor(this.gameInput);
 		batch.end();
