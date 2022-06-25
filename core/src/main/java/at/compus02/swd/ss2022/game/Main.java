@@ -164,6 +164,11 @@ public class Main extends ApplicationAdapter {
 			}
 		}
 
+		if(Gdx.input.isKeyPressed(Input.Keys.F))
+		{
+			mainPlayer.eliminate(Input.Keys.F);
+		}
+
 		mainEnemy.followPlayer(newMap);
 		enemy.runFromPlayer(newMap);
 
