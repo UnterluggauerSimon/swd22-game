@@ -57,6 +57,8 @@ public class DecorationFactory implements Factory
                 return new LittleTree();
             case Hearth:
                 return new Hearth();
+            case Stone:
+                return new Stone();
             default:
                 return null;
         }

@@ -8,8 +8,10 @@ import at.compus02.swd.ss2022.game.playableChars.Enemy;
 import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MoveChars implements Subject
@@ -147,6 +149,14 @@ public class MoveChars implements Subject
         if (mapCalculator.isMoveAllowed(newMap, gameObject.getX(), gameObject.getY() - moveLength))
         {
             gameObject.setPosition(gameObject.getX(), gameObject.getY() - moveLength);
+        }
+    }
+
+    public void eliminate(LinkedList<GameObject> enemies, Array<GameObject> gameObjects)
+    {
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        {
+            mainPlayer.eliminate(enemies, gameObjects);
         }
     }
 

@@ -23,7 +23,6 @@ public class Enemy implements GameObject
     }
 
     MapCalculator mapCalculator = new MapCalculator();
-    MainPlayer mainPlayer = MainPlayer.getInstance();
 
 
     public void moveLeft(GameObject[][] newMap)
