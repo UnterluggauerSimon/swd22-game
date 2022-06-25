@@ -4,7 +4,6 @@ import at.compus02.swd.ss2022.game.assetsrepository.AssetRepository;
 import at.compus02.swd.ss2022.game.converter.MapCalculator;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
-import at.compus02.swd.ss2022.game.gameobjects.GoodKnight;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

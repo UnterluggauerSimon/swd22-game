@@ -10,12 +10,10 @@ import at.compus02.swd.ss2022.game.factories.GameObjectType;
 import at.compus02.swd.ss2022.game.movement.MoveChars;
 import at.compus02.swd.ss2022.game.observer.PlayerChannel;
 import at.compus02.swd.ss2022.game.playableChars.Enemy;
-import at.compus02.swd.ss2022.game.playableChars.MainEnemy;
 import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -42,11 +40,8 @@ public class Main extends ApplicationAdapter {
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
-	private Sound mp3Sound;
 
 	public MainPlayer mainPlayer;
-	public MainEnemy mainEnemy;
-
 	public String movedDirection;
 
 	GameObject[][] newMap = new GameObject[16][16];
@@ -57,9 +52,6 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		//Background music
-		//Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
-		//mp3Sound.loop(0.2f);
 		assetRepository.preloadAssests();
 
 		TileFactory tileFactory = new TileFactory();
@@ -99,10 +91,6 @@ public class Main extends ApplicationAdapter {
 		gameObjects.add(mainPlayer);
 		mainPlayer.addObserver(playerChannel);
 
-		mainEnemy = MainEnemy.getInstance();
-		mainEnemy.setPosition(30, 0);
-		gameObjects.add(mainEnemy);
-
 		Enemy enemy = new Enemy(GameObjectType.Log);
 		enemy.setPosition(40,40);
 		enemies.add(enemy);
@@ -110,9 +98,6 @@ public class Main extends ApplicationAdapter {
 		Enemy enemy2 = new Enemy(GameObjectType.Questmaster);
 		enemy2.setPosition(40,40);
 		enemies.add(enemy2);
-//		enemy = Enemy.getInstance();
-		//enemy.setPosition(15, 3);
-//		gameObjects.add(enemy);
 
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
@@ -167,23 +152,22 @@ public class Main extends ApplicationAdapter {
 			mainPlayer.eliminate(Input.Keys.F);
 		}
 
-		//mainEnemy.followPlayer(newMap);
-		//enemy.runFromPlayer(newMap);
-
-		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
+		for (GameObject enemy : enemies)
 		{
-			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
-			if(lifes.size > 0)
+			if(enemy.getY() == mainPlayer.getY() && enemy.getX() == mainPlayer.getX())
 			{
-				lifes.removeIndex(lifes.size - 1);
-				mainEnemy.setPosition(130, 130);
-			}
-			else if (lifes.size == 0)
-			{
-				dispose();
+				font.draw(batch, "Player wurde gefangen!!", enemy.getX(), enemy.getY());
+				if(lifes.size > 0)
+				{
+					lifes.removeIndex(lifes.size - 1);
+					enemy.setPosition(130, 130);
+				}
+				else if(lifes.size == 0)
+				{
+					dispose();
+				}
 			}
 		}
-
 		Gdx.input.setInputProcessor(this.gameInput);
 		batch.end();
 	}
@@ -205,7 +189,6 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		assetRepository.dispose();
-		mp3Sound.dispose();
 		batch.dispose();
 	}
 
