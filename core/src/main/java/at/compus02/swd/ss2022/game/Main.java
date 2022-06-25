@@ -30,6 +30,8 @@ public class Main extends ApplicationAdapter {
 	private ExtendViewport viewport = new ExtendViewport(480.0f, 480.0f, 480.0f, 480.0f);
 	private GameInput gameInput = new GameInput();
 
+
+	//region Initialize
 	private Array<GameObject> gameObjects = new Array<>();
 	private Array<GameObject> lifes = new Array<>();
 	private LinkedList<GameObject> enemies = new LinkedList<>();
@@ -50,6 +52,7 @@ public class Main extends ApplicationAdapter {
 	MapCalculator mapCalculator = new MapCalculator();
 
 	PlayerChannel playerChannel = new PlayerChannel();
+	//endregion
 
 
 	@Override
@@ -59,6 +62,7 @@ public class Main extends ApplicationAdapter {
 		TileFactory tileFactory = new TileFactory();
 		DecorationFactory decorationFactory = new DecorationFactory();
 
+		//region Create Maps
 		for (int i = 0; i < newMap.length; i++) {
 			for (int j = 0; j < newMap[i].length; j++) {
 				newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
@@ -88,27 +92,34 @@ public class Main extends ApplicationAdapter {
 				looserMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gravel, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
 			}
 		}
+		//endregion
 
+		//region Create Decoration
 		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
 		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
 
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
+		//endregion
 
+		//region Create Players
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
 
-		Enemy enemy = new Enemy(GameObjectType.Log, 0);
+		Enemy enemy = new Enemy(GameObjectType.Log, 2);
 		enemy.setPosition(40,40);
 		enemies.add(enemy);
 
 		Enemy enemy2 = new Enemy(GameObjectType.Questmaster, 1);
 		enemy2.setPosition(40,40);
 		enemies.add(enemy2);
+		//endregion
 
+		//region Create Lifes for Player
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, 14, 130));
+		//endregion
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -201,8 +212,7 @@ public class Main extends ApplicationAdapter {
             int posdown = (int) mainPlayer.getY() + 1;
 
             for (GameObject enemy : enemies)
-            {
-                if ((enemy.getX() <= posright || enemy.getX() >= posleft) && (enemy.getY() <= posdown || enemy.getY() >= posup))
+            {if ((enemy.getX() <= posright && enemy.getX() >= posleft) && (enemy.getY() <= posdown && enemy.getY() >= posup))
                 {
                     float enemyX = enemy.getX();
                     float enemyY = enemy.getY();
