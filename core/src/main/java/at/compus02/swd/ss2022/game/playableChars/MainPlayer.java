@@ -6,6 +6,9 @@ import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.gameobjects.Knight;
 import at.compus02.swd.ss2022.game.observer.Observer;
 import at.compus02.swd.ss2022.game.observer.Subject;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +78,7 @@ public class MainPlayer extends Knight implements Subject
 
     public void eliminate(int key)
     {
+
 
     }
 
