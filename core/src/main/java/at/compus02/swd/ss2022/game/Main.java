@@ -45,6 +45,8 @@ public class Main extends ApplicationAdapter {
 	public String movedDirection;
 
 	GameObject[][] newMap = new GameObject[16][16];
+	GameObject[][] looserMap = new GameObject[16][16];
+
 	MapCalculator mapCalculator = new MapCalculator();
 
 	PlayerChannel playerChannel = new PlayerChannel();
@@ -81,14 +83,20 @@ public class Main extends ApplicationAdapter {
 			newMap[j][6] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(j), mapCalculator.arrayInitToMapPixel(6));
 		}
 
+		for (int i = 0; i < looserMap.length; i++) {
+			for (int j = 0; j < looserMap[i].length; j++) {
+				looserMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gravel, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
+			}
+		}
+
 		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
 		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
 
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
 
-        mainPlayer = MainPlayer.getInstance();
-        playerChannel.update("Spieler wurde erstellt");
-        gameObjects.add(mainPlayer);
+		mainPlayer = MainPlayer.getInstance();
+		playerChannel.update("Spieler wurde erstellt");
+		gameObjects.add(mainPlayer);
 
 		Enemy enemy = new Enemy(GameObjectType.Log);
 		enemy.setPosition(40,40);
@@ -171,12 +179,19 @@ public class Main extends ApplicationAdapter {
 					lifes.removeIndex(lifes.size - 1);
 					enemy.setPosition(130, 130);
 				}
-				else if(lifes.size == 0)
-				{
-					dispose();
-				}
 			}
 		}
+
+		if(lifes.size == 0)
+		{
+			for (GameObject[] objects : looserMap) {
+				for (GameObject object : objects) {
+					object.draw(batch);
+				}
+			}
+			font.draw(batch, "You DIED looser!", -20, 0);
+		}
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
         {
