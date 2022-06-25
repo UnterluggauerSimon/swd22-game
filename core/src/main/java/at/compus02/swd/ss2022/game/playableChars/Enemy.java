@@ -13,12 +13,14 @@ public class Enemy implements GameObject
 {
     private Texture image;
     private Sprite sprite;
+    private int life;
 
-    public Enemy(GameObjectType gameObjectType)
+    public Enemy(GameObjectType gameObjectType, int initialLife)
     {
         AssetRepository assetRepository = AssetRepository.getAssetRepository();
         image = assetRepository.getTexture(gameObjectType);
         sprite = new Sprite(image);
+        life = initialLife;
     }
 
     MapCalculator mapCalculator = new MapCalculator();
@@ -91,5 +93,15 @@ public class Enemy implements GameObject
     public boolean isAllowedToWalk()
     {
         return false;
+    }
+
+    public int getLife()
+    {
+        return life;
+    }
+
+    public void setLife(int life)
+    {
+        this.life = life;
     }
 }

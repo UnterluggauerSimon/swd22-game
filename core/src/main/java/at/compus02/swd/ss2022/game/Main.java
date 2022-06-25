@@ -25,192 +25,247 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import java.util.LinkedList;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter {
-	private SpriteBatch batch;
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
+ */
+public class Main extends ApplicationAdapter
+{
+    private SpriteBatch batch;
 
-	private ExtendViewport viewport = new ExtendViewport(480.0f, 480.0f, 480.0f, 480.0f);
-	private GameInput gameInput = new GameInput();
+    private ExtendViewport viewport = new ExtendViewport(480.0f, 480.0f, 480.0f, 480.0f);
+    private GameInput gameInput = new GameInput();
 
-	private Array<GameObject> gameObjects = new Array<>();
-	private Array<GameObject> lifes = new Array<>();
-	private LinkedList<GameObject> enemies = new LinkedList<>();
+    private Array<GameObject> gameObjects = new Array<>();
+    private Array<GameObject> lifes = new Array<>();
+    private LinkedList<GameObject> enemies = new LinkedList<>();
 
-	AssetRepository assetRepository = AssetRepository.getAssetRepository();
+    AssetRepository assetRepository = AssetRepository.getAssetRepository();
 
-	private final float updatesPerSecond = 60;
-	private final float logicFrameTime = 1 / updatesPerSecond;
-	private float deltaAccumulator = 0;
-	private BitmapFont font;
-	private Sound mp3Sound;
+    private final float updatesPerSecond = 60;
+    private final float logicFrameTime = 1 / updatesPerSecond;
+    private float deltaAccumulator = 0;
+    private BitmapFont font;
+    private Sound mp3Sound;
 
-	public MainPlayer mainPlayer;
-	public MainEnemy mainEnemy;
+    public MainPlayer mainPlayer;
+    public MainEnemy mainEnemy;
 
-	public String movedDirection;
+    public String movedDirection;
 
-	GameObject[][] newMap = new GameObject[16][16];
-	MapCalculator mapCalculator = new MapCalculator();
+    GameObject[][] newMap = new GameObject[16][16];
+    MapCalculator mapCalculator = new MapCalculator();
 
-	PlayerChannel playerChannel = new PlayerChannel();
+    PlayerChannel playerChannel = new PlayerChannel();
 
+    @Override
+    public void create()
+    {
+        //Background music
+        //Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
+        //mp3Sound.loop(0.2f);
+        assetRepository.preloadAssests();
 
-	@Override
-	public void create() {
-		//Background music
-		//Sound mp3Sound = Gdx.audio.newSound(Gdx.files.internal("assets/GameSound.mp3"));
-		//mp3Sound.loop(0.2f);
-		assetRepository.preloadAssests();
+        TileFactory tileFactory = new TileFactory();
+        DecorationFactory decorationFactory = new DecorationFactory();
 
-		TileFactory tileFactory = new TileFactory();
-		DecorationFactory decorationFactory = new DecorationFactory();
+        for (int i = 0; i < newMap.length; i++)
+        {
+            for (int j = 0; j < newMap[i].length; j++)
+            {
+                newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
+            }
+        }
 
-		for (int i = 0; i < newMap.length; i++) {
-			for (int j = 0; j < newMap[i].length; j++) {
-				newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
-			}
-		}
+        for (int i = 2; i < newMap.length - 2; i++)
+        {
+            for (int j = 2; j < newMap[i].length - 2; j++)
+            {
+                newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gras, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
+            }
+        }
 
-		for (int i = 2; i < newMap.length -2; i++) {
-			for (int j = 2; j < newMap[i].length -2 ; j++) {
-				newMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gras, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
-			}
-		}
+        for (int j = 5; j < newMap[5].length - 2; j++)
+        {
+            newMap[5][j] = tileFactory.createSingleGameObject(GameObjectType.Wall, mapCalculator.arrayInitToMapPixel(5), mapCalculator.arrayInitToMapPixel(j));
+        }
 
-		for (int j = 5; j < newMap[5].length -2 ; j++) {
-			newMap[5][j] = tileFactory.createSingleGameObject(GameObjectType.Wall, mapCalculator.arrayInitToMapPixel(5), mapCalculator.arrayInitToMapPixel(j));
-		}
+        for (int j = 2; j < 6; j++)
+        {
+            newMap[10][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(j));
+        }
 
-		for (int j = 2; j < 6 ; j++) {
-			newMap[10][j] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(j));
-		}
+        for (int j = 10; j < newMap.length; j++)
+        {
+            newMap[j][6] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(j), mapCalculator.arrayInitToMapPixel(6));
+        }
 
-		for (int j = 10; j < newMap.length ; j++) {
-			newMap[j][6] = tileFactory.createSingleGameObject(GameObjectType.Water, mapCalculator.arrayInitToMapPixel(j), mapCalculator.arrayInitToMapPixel(6));
-		}
+        newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
+        newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
 
-		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
-		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
+        gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign, 1, 130, 130, 130, 130));
 
-		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
+        mainPlayer = MainPlayer.getInstance();
+        playerChannel.update("Spieler wurde erstellt");
+        gameObjects.add(mainPlayer);
+        mainPlayer.addObserver(playerChannel);
 
-		mainPlayer = MainPlayer.getInstance();
-		playerChannel.update("Spieler wurde erstellt");
-		gameObjects.add(mainPlayer);
-		mainPlayer.addObserver(playerChannel);
+        mainEnemy = MainEnemy.getInstance();
+        mainEnemy.setPosition(30, 0);
+        gameObjects.add(mainEnemy);
 
-		mainEnemy = MainEnemy.getInstance();
-		mainEnemy.setPosition(30, 0);
-		gameObjects.add(mainEnemy);
+        Enemy enemy = new Enemy(GameObjectType.Log, 1);
+        enemy.setPosition(40, 40);
+        enemies.add(enemy);
 
-		Enemy enemy = new Enemy(GameObjectType.Log);
-		enemy.setPosition(40,40);
-		enemies.add(enemy);
-
-		Enemy enemy2 = new Enemy(GameObjectType.Questmaster);
-		enemy2.setPosition(40,40);
-		enemies.add(enemy2);
+        Enemy enemy2 = new Enemy(GameObjectType.Questmaster, 2);
+        enemy2.setPosition(40, 40);
+        enemies.add(enemy2);
 //		enemy = Enemy.getInstance();
-		//enemy.setPosition(15, 3);
+        //enemy.setPosition(15, 3);
 //		gameObjects.add(enemy);
 
-		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
-		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
-		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, 14, 130));
+        lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
+        lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
+        lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, 14, 130));
 
-		batch = new SpriteBatch();
-		font = new BitmapFont();
-		font.setColor(Color.WHITE);
-		Gdx.input.setInputProcessor(this.gameInput);
-	}
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.WHITE);
+        Gdx.input.setInputProcessor(this.gameInput);
+    }
 
-	private void act(float delta) {
-		for(GameObject gameObject : gameObjects) {
-			gameObject.act(delta);
-		}
-	}
+    private void act(float delta)
+    {
+        for (GameObject gameObject : gameObjects)
+        {
+            gameObject.act(delta);
+        }
+    }
 
-	private void draw() {
+    private void draw()
+    {
 
-		batch.setProjectionMatrix(viewport.getCamera().combined);
-		batch.begin();
-		int counter = 0;
+        batch.setProjectionMatrix(viewport.getCamera().combined);
+        batch.begin();
+        int counter = 0;
 
-		MoveChars moveChars = new MoveChars();
+        MoveChars moveChars = new MoveChars();
 
-		for (GameObject[] gameObject : newMap)
-		{
-			for (GameObject gameObject1 : gameObject)
-				gameObject1.draw(batch);
-		}
+        for (GameObject[] gameObject : newMap)
+        {
+            for (GameObject gameObject1 : gameObject)
+                gameObject1.draw(batch);
+        }
 
-		for(GameObject gameObject : gameObjects) {
-			gameObject.draw(batch);
-		}
+        for (GameObject gameObject : gameObjects)
+        {
+            gameObject.draw(batch);
+        }
 
-		for(GameObject gameObject : lifes) {
-			gameObject.draw(batch);
-		}
+        for (GameObject gameObject : lifes)
+        {
+            gameObject.draw(batch);
+        }
 
-		for(GameObject gameObject : enemies)
-		{
-			gameObject.draw(batch);
-		}
+        for (GameObject gameObject : enemies)
+        {
+            gameObject.draw(batch);
+        }
 
-		moveChars.movePlayerNormal(newMap, mainPlayer);
+        moveChars.movePlayerNormal(newMap, mainPlayer);
 
-		moveChars.followPlayer(newMap, enemies.getFirst());
-		moveChars.runFromPlayer(newMap, enemies.getLast());
+        try
+        {
+            moveChars.followPlayer(newMap, enemies.getFirst());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Enemy1 died!");
+        }
 
-		if(Gdx.input.isKeyPressed(Input.Keys.F))
-		{
-			mainPlayer.eliminate(Input.Keys.F);
-		}
+        try
+        {
+            moveChars.runFromPlayer(newMap, enemies.getLast());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Enemy2 died!");
+        }
 
-		//mainEnemy.followPlayer(newMap);
-		//enemy.runFromPlayer(newMap);
+        //mainEnemy.followPlayer(newMap);
+        //enemy.runFromPlayer(newMap);
 
-		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
-		{
-			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
-			if(lifes.size > 0)
-			{
-				lifes.removeIndex(lifes.size - 1);
-				mainEnemy.setPosition(130, 130);
-			}
-			else if (lifes.size == 0)
-			{
-				dispose();
-			}
-		}
+        if (mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX() == mainPlayer.getX())
+        {
+            font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
+            if (lifes.size > 0)
+            {
+                lifes.removeIndex(lifes.size - 1);
+                mainEnemy.setPosition(130, 130);
+            }
+            else if (lifes.size == 0)
+            {
+                dispose();
+            }
+        }
 
-		Gdx.input.setInputProcessor(this.gameInput);
-		batch.end();
-	}
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        {
+            int posleft = (int) mainPlayer.getX() - 1;
+            int posright = (int) mainPlayer.getX() + 1;
+            int posup = (int) mainPlayer.getY() - 1;
+            int posdown = (int) mainPlayer.getY() + 1;
 
-	@Override
-	public void render() {
-		Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            for (GameObject enemy : enemies)
+            {
+                if ((enemy.getX() <= posright || enemy.getX() >= posleft) && (enemy.getY() <= posdown || enemy.getY() >= posup))
+                {
+                    float enemyX = enemy.getX();
+                    float enemyY = enemy.getY();
 
-		float delta = Gdx.graphics.getDeltaTime();
-		deltaAccumulator += delta;
-		while(deltaAccumulator > logicFrameTime) {
-			deltaAccumulator -= logicFrameTime;
-			act(logicFrameTime);
-		}
-		draw();
-	}
+                    Enemy e = (Enemy) enemy;
+                    int newLife = e.getLife() - 1;
+                    if (newLife == 0)
+                    {
+                        enemies.remove(e);
+                    }
 
-	@Override
-	public void dispose() {
-		assetRepository.dispose();
-		mp3Sound.dispose();
-		batch.dispose();
-	}
+                    e.setLife(newLife);
+                }
+            }
+        }
 
-	@Override
-	public void resize(int width, int height){
-		viewport.update(width,height);
-	}
+        Gdx.input.setInputProcessor(this.gameInput);
+        batch.end();
+    }
+
+    @Override
+    public void render()
+    {
+        Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        float delta = Gdx.graphics.getDeltaTime();
+        deltaAccumulator += delta;
+        while (deltaAccumulator > logicFrameTime)
+        {
+            deltaAccumulator -= logicFrameTime;
+            act(logicFrameTime);
+        }
+        draw();
+    }
+
+    @Override
+    public void dispose()
+    {
+        assetRepository.dispose();
+        mp3Sound.dispose();
+        batch.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height)
+    {
+        viewport.update(width, height);
+    }
 }
