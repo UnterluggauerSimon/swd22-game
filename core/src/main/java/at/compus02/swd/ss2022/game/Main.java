@@ -7,6 +7,7 @@ import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.factories.TileFactory;
 import at.compus02.swd.ss2022.game.factories.GameObjectType;
+import at.compus02.swd.ss2022.game.movement.MoveChars;
 import at.compus02.swd.ss2022.game.observer.PlayerChannel;
 import at.compus02.swd.ss2022.game.playableChars.Enemy;
 import at.compus02.swd.ss2022.game.playableChars.MainEnemy;
@@ -22,6 +23,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
+import java.util.LinkedList;
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
 	private SpriteBatch batch;
@@ -31,6 +34,7 @@ public class Main extends ApplicationAdapter {
 
 	private Array<GameObject> gameObjects = new Array<>();
 	private Array<GameObject> lifes = new Array<>();
+	private LinkedList<GameObject> enemies = new LinkedList<>();
 
 	AssetRepository assetRepository = AssetRepository.getAssetRepository();
 
@@ -42,7 +46,6 @@ public class Main extends ApplicationAdapter {
 
 	public MainPlayer mainPlayer;
 	public MainEnemy mainEnemy;
-	public Enemy enemy;
 
 	public String movedDirection;
 
@@ -89,25 +92,27 @@ public class Main extends ApplicationAdapter {
 		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
 		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
 
-
 		gameObjects.addAll(decorationFactory.createGameObjects(gameObjects, GameObjectType.Sign,1,130,130, 130,130));
-
-
 
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
-
-
 		mainPlayer.addObserver(playerChannel);
 
 		mainEnemy = MainEnemy.getInstance();
 		mainEnemy.setPosition(30, 0);
 		gameObjects.add(mainEnemy);
 
-		enemy = Enemy.getInstance();
-		enemy.setPosition(15, 3);
-		gameObjects.add(enemy);
+		Enemy enemy = new Enemy(GameObjectType.Log);
+		enemy.setPosition(40,40);
+		enemies.add(enemy);
+
+		Enemy enemy2 = new Enemy(GameObjectType.Questmaster);
+		enemy2.setPosition(40,40);
+		enemies.add(enemy2);
+//		enemy = Enemy.getInstance();
+		//enemy.setPosition(15, 3);
+//		gameObjects.add(enemy);
 
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -50, 130));
 		lifes.add(decorationFactory.createSingleGameObject(GameObjectType.Hearth, -18, 130));
@@ -129,9 +134,9 @@ public class Main extends ApplicationAdapter {
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
+		int counter = 0;
 
-		float newX = mainPlayer.getX();
-		float newY = mainPlayer.getY();
+		MoveChars moveChars = new MoveChars();
 
 		for (GameObject[] gameObject : newMap)
 		{
@@ -147,35 +152,24 @@ public class Main extends ApplicationAdapter {
 			gameObject.draw(batch);
 		}
 
-		if(mapCalculator.isMoveAllowed(newMap,mainPlayer))
+		for(GameObject gameObject : enemies)
 		{
-			if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-			{
-				mainPlayer.moveLeft(Input.Keys.LEFT);
-			}
-			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				mainPlayer.moveRight(Input.Keys.RIGHT);
-			}
-			if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				mainPlayer.moveUp(Input.Keys.UP);
-			}
-			if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				mainPlayer.moveDown(Input.Keys.DOWN);
-			}
+			gameObject.draw(batch);
 		}
+
+		moveChars.movePlayerNormal(newMap, mainPlayer);
+
+		moveChars.followPlayer(newMap, enemies.getFirst());
+		moveChars.runFromPlayer(newMap, enemies.getLast());
 
 		if(Gdx.input.isKeyPressed(Input.Keys.F))
 		{
 			mainPlayer.eliminate(Input.Keys.F);
 		}
 
-		mainEnemy.followPlayer(newMap);
-		enemy.runFromPlayer(newMap);
+		//mainEnemy.followPlayer(newMap);
+		//enemy.runFromPlayer(newMap);
 
-		//font.draw(batch, "aktuelle spieler Pixel x:"+ mainPlayer.getX() + " y:" + mainPlayer.getY(), -100, -100);
-		//font.draw(batch, "aktuelle Map Position x:"+ mapCalculator.mapPixelToArrayInt(newX) + " y:" + mapCalculator.mapPixelToArrayInt(newY), -100, -200);
-
-		//font.draw(batch, "aktuelle Enemy Pixel x:"+ mainEnemy.getX() + " y:" + mainEnemy.getY(), -100, -150);
 		if(mainEnemy.getY() == mainPlayer.getY() && mainEnemy.getX()==mainPlayer.getX())
 		{
 			font.draw(batch, "Player wurde gefangen!!", mainEnemy.getX(), mainEnemy.getY());
@@ -189,9 +183,6 @@ public class Main extends ApplicationAdapter {
 				dispose();
 			}
 		}
-
-
-
 
 		Gdx.input.setInputProcessor(this.gameInput);
 		batch.end();
