@@ -2,16 +2,26 @@ package at.compus02.swd.ss2022.game.movement;
 
 import at.compus02.swd.ss2022.game.converter.MapCalculator;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
+import at.compus02.swd.ss2022.game.observer.Observer;
+import at.compus02.swd.ss2022.game.observer.Subject;
 import at.compus02.swd.ss2022.game.playableChars.Enemy;
 import at.compus02.swd.ss2022.game.playableChars.MainPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-public class MoveChars
+import java.util.ArrayList;
+import java.util.List;
+
+public class MoveChars implements Subject
 {
     MapCalculator mapCalculator = new MapCalculator();
-    MainPlayer mainPlayer = MainPlayer.getInstance();
+    MainPlayer mainPlayer;
     private int moveLength = 1;
+
+    private String movedDirection;
+
+    private String message;
+    private List<Observer> channels = new ArrayList<>();
 
     public MoveChars()
     {
@@ -37,6 +47,7 @@ public class MoveChars
 
     public void followPlayer(GameObject[][] newMap, GameObject enemy)
     {
+        mainPlayer = MainPlayer.getInstance();
         moveLength = 1;
         float targetX = mainPlayer.getX();
         float targetY = mainPlayer.getY();
@@ -97,6 +108,9 @@ public class MoveChars
 
     public void moveLeft(GameObject[][] newMap, GameObject gameObject)
     {
+        movedDirection = gameObject.toString() + " moved Left";
+        notifyUpdate(movedDirection);
+
         if (mapCalculator.isMoveAllowed(newMap, gameObject.getX() - moveLength, gameObject.getY()))
         {
             gameObject.setPosition(gameObject.getX() - moveLength, gameObject.getY());
@@ -105,6 +119,9 @@ public class MoveChars
 
     public void moveRight(GameObject[][] newMap, GameObject gameObject)
     {
+        movedDirection = gameObject.toString() + " moved Right";
+        notifyUpdate(movedDirection);
+
         if (mapCalculator.isMoveAllowed(newMap, gameObject.getX() + moveLength, gameObject.getY()))
         {
             gameObject.setPosition(gameObject.getX() + moveLength, gameObject.getY());
@@ -113,6 +130,9 @@ public class MoveChars
 
     public void moveUp(GameObject[][] newMap, GameObject gameObject)
     {
+        movedDirection = gameObject.toString() + " moved Up";
+        notifyUpdate(movedDirection);
+
         if (mapCalculator.isMoveAllowed(newMap, gameObject.getX(), gameObject.getY() + moveLength))
         {
             gameObject.setPosition(gameObject.getX(), gameObject.getY() + moveLength);
@@ -121,9 +141,31 @@ public class MoveChars
 
     public void moveDown(GameObject[][] newMap, GameObject gameObject)
     {
+        movedDirection = gameObject.toString() + " moved Down";
+        notifyUpdate(movedDirection);
+
         if (mapCalculator.isMoveAllowed(newMap, gameObject.getX(), gameObject.getY() - moveLength))
         {
             gameObject.setPosition(gameObject.getX(), gameObject.getY() - moveLength);
+        }
+    }
+
+    public void addObserver(Observer channel)
+    {
+        this.channels.add(channel);
+    }
+
+    public void removeObserver(Observer channel)
+    {
+        this.channels.remove(channel);
+    }
+
+    public void notifyUpdate(String message)
+    {
+        this.message = message;
+        for (Observer channel : this.channels)
+        {
+            channel.update(this.message);
         }
     }
 }
