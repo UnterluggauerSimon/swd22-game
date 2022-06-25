@@ -89,7 +89,6 @@ public class Main extends ApplicationAdapter {
 		mainPlayer = MainPlayer.getInstance();
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
-		mainPlayer.addObserver(playerChannel);
 
 		Enemy enemy = new Enemy(GameObjectType.Log);
 		enemy.setPosition(40,40);
