@@ -14,10 +14,6 @@ import java.util.List;
 public class MainPlayer extends Knight
 {
     private static final MainPlayer mainPlayer = new MainPlayer();
-    private String movedDirection;
-
-    private String message;
-    private int previousDirection;
     private List<Observer> channels = new ArrayList<>();
 
     private MainPlayer()
