@@ -44,12 +44,11 @@ public class Main extends ApplicationAdapter {
 	private BitmapFont font;
 
 	public MainPlayer mainPlayer;
-	public String movedDirection;
+	int mainPlayerRange = 32;
 
 	GameObject[][] newMap = new GameObject[16][16];
 	GameObject[][] looserMap = new GameObject[16][16];
     GameObject[][] winMap = new GameObject[16][16];
-
 
 	MapCalculator mapCalculator = new MapCalculator();
 
@@ -57,7 +56,6 @@ public class Main extends ApplicationAdapter {
     Enemy enemy1;
     Enemy enemy2;
 	//endregion
-
 
 	@Override
 	public void create() {
@@ -98,17 +96,17 @@ public class Main extends ApplicationAdapter {
 				looserMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gravel, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
 			}
 		}
+
+		for (int i = 0; i < winMap.length; i++)
+		{
+			for (int j = 0; j < winMap[i].length; j++)
+			{
+				winMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gras, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
+			}
+		}
 		//endregion
 
 		//region Create Decoration
-        for (int i = 0; i < winMap.length; i++)
-        {
-            for (int j = 0; j < winMap[i].length; j++)
-            {
-                winMap[i][j] = tileFactory.createSingleGameObject(GameObjectType.Gras, mapCalculator.arrayInitToMapPixel(i), mapCalculator.arrayInitToMapPixel(j));
-            }
-        }
-
 		newMap[11][6] = tileFactory.createSingleGameObject(GameObjectType.BridgeUp, mapCalculator.arrayInitToMapPixel(11), mapCalculator.arrayInitToMapPixel(6));
 		newMap[10][4] = tileFactory.createSingleGameObject(GameObjectType.Bridge, mapCalculator.arrayInitToMapPixel(10), mapCalculator.arrayInitToMapPixel(4));
 
@@ -148,10 +146,8 @@ public class Main extends ApplicationAdapter {
 	}
 
 	private void draw() {
-
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
-		int counter = 0;
 
 		MoveChars moveChars = new MoveChars();
 
@@ -229,7 +225,7 @@ public class Main extends ApplicationAdapter {
             font.draw(batch, "You WIN Winner!", -20, 0);
         }
 
-        moveChars.eliminate(enemies, gameObjects);
+        moveChars.eliminate(enemies, gameObjects, mainPlayerRange);
 
 		Gdx.input.setInputProcessor(this.gameInput);
 		batch.end();

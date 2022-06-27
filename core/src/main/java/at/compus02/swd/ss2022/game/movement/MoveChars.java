@@ -152,11 +152,11 @@ public class MoveChars implements Subject
         }
     }
 
-    public void eliminate(LinkedList<GameObject> enemies, Array<GameObject> gameObjects)
+    public void eliminate(LinkedList<GameObject> enemies, Array<GameObject> gameObjects, int range)
     {
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
         {
-            mainPlayer.eliminate(enemies, gameObjects);
+            mainPlayer.eliminate(enemies, gameObjects, range);
         }
     }
 

@@ -30,12 +30,12 @@ public class MainPlayer extends Knight
         return mainPlayer;
     }
 
-    public void eliminate(LinkedList<GameObject> enemies, Array<GameObject> gameObjects)
+    public void eliminate(LinkedList<GameObject> enemies, Array<GameObject> gameObjects, int range)
     {
-        int posleft = (int) mainPlayer.getX() - 32;
-        int posright = (int) mainPlayer.getX() + 32;
-        int posup = (int) mainPlayer.getY() - 32;
-        int posdown = (int) mainPlayer.getY() + 32;
+        int posleft = (int) mainPlayer.getX() - range;
+        int posright = (int) mainPlayer.getX() + range;
+        int posup = (int) mainPlayer.getY() - range;
+        int posdown = (int) mainPlayer.getY() + range;
 
         for (GameObject enemy : enemies)
         {
@@ -44,16 +44,16 @@ public class MainPlayer extends Knight
                 int enemyX = (int) enemy.getX();
                 int enemyY = (int) enemy.getY();
 
-                Enemy e = (Enemy) enemy;
-                int newLife = e.getLife() - 1;
+                Enemy currentEnemy = (Enemy) enemy;
+                int newLife = currentEnemy.getLife() - 1;
                 if (newLife == 0)
                 {
                     DecorationFactory df = new DecorationFactory();
                     gameObjects.add(df.createSingleGameObject(GameObjectType.Stone, enemyX, enemyY));
-                    enemies.remove(e);
+                    enemies.remove(currentEnemy);
                 }
 
-                e.setLife(newLife);
+                currentEnemy.setLife(newLife);
             }
         }
     }
