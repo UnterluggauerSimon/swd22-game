@@ -118,11 +118,11 @@ public class Main extends ApplicationAdapter {
 		playerChannel.update("Spieler wurde erstellt");
 		gameObjects.add(mainPlayer);
 
-        enemy1 = new Enemy(GameObjectType.BadKnight, 1);
+        enemy1 = new Enemy(GameObjectType.BadKnight, 5);
         enemy1.setPosition(40, 40);
         enemies.add(enemy1);
 
-        enemy2 = new Enemy(GameObjectType.Questmaster, 2);
+        enemy2 = new Enemy(GameObjectType.Questmaster, 10);
         enemy2.setPosition(40, 40);
         enemies.add(enemy2);
 		//endregion
