@@ -170,11 +170,13 @@ public class Main extends ApplicationAdapter {
 			gameObject.draw(batch);
 		}
 
+		font.draw(batch, "Press F to hit enemy! May require a few hits.", -100, 220);
+
 		moveChars.movePlayerNormal(newMap, mainPlayer);
 
         try
         {
-            moveChars.followPlayer(newMap, enemies.getFirst());
+            moveChars.followPlayer(newMap, enemy1);
         }
         catch (Exception e)
         {
@@ -183,7 +185,7 @@ public class Main extends ApplicationAdapter {
 
         try
         {
-            moveChars.runFromPlayer(newMap, enemies.getLast());
+            moveChars.runFromPlayer(newMap, enemy2);
         }
         catch (Exception e)
         {
