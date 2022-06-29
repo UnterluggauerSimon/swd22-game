@@ -170,7 +170,7 @@ public class Main extends ApplicationAdapter {
 			gameObject.draw(batch);
 		}
 
-		font.draw(batch, "Press F to hit enemy! May require a few hits.", -100, 220);
+		font.draw(batch, "Press Space to hit enemy! May require a few hits.", -100, 220);
 
 		moveChars.movePlayerNormal(newMap, mainPlayer);
 
